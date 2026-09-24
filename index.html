@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="A playful, colorful celebration of frogs — the champions of ponds, lily pads, and all things ribbit." />
+  <title>Ribbit! A Frog's World</title>
+  <style>
+    :root {
+      --deep: #1b3a5a;
+      --pond: #2a9d8f;
+      --lily: #52c27f;
+      --sun: #e9c46a;
+      --sky: #264653;
+      --frog: #4caf50;
+      --frog-dark: #2e7d32;
+      --cream: #fff8e7;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+      color: var(--cream);
+      background: linear-gradient(160deg, #0f2b3a 0%, #1e5f66 35%, #2a9d8f 70%, #52c27f 100%);
+      background-attachment: fixed;
+      min-height: 100vh;
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    /* ---------- Background decoration ---------- */
+    .leaf {
+      position: fixed;
+      bottom: -60px;
+      border-radius: 30px;
+      opacity: 0.15;
+      background: radial-gradient(circle at 30% 30%, #d8ffd8, #7ee08a 70%);
+      animation: floatUp var(--dur) linear infinite;
+      z-index: 0;
+      pointer-events: none;
+    }
+    .leaf:nth-child(1) { left: 5%;  width: 46px;  height: 26px;  --dur: 22s; transform: rotate(-18deg); }
+    .leaf:nth-child(2) { left: 22%; width: 70px;  height: 38px;  --dur: 30s; transform: rotate(22deg);  animation-delay: -6s; }
+    .leaf:nth-child(3) { left: 44%; width: 40px;  height: 22px;  --dur: 18s; transform: rotate(-8deg);  animation-delay: -12s; }
+    .leaf:nth-child(4) { left: 63%; width: 58px;  height: 32px;  --dur: 26s; transform: rotate(30deg);  animation-delay: -3s; }
+    .leaf:nth-child(5) { left: 82%; width: 50px;  height: 28px;  --dur: 24s; transform: rotate(-25deg); animation-delay: -15s; }
+    .leaf:nth-child(6) { left: 93%; width: 66px;  height: 36px;  --dur: 34s; transform: rotate(12deg);  animation-delay: -9s; }
+
+    @keyframes floatUp {
+      0%   { transform: translateY(0) rotate(var(--a, 0deg)); }
+      100% { transform: translateY(-115vh) rotate(240deg); }
+    }
+
+    .bubble {
+      position: fixed;
+      bottom: -40px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.7), rgba(255,255,255,0.1));
+      opacity: 0.12;
+      animation: bob var(--dur) ease-in-out infinite;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .bubble:nth-child(7) { left: 12%; width: 22px; height: 22px; --dur: 4s;  animation-delay: 0s; }
+    .bubble:nth-child(8) { left: 38%; width: 14px; height: 14px; --dur: 5s;  animation-delay: 1s; }
+    .bubble:nth-child(9) { left: 57%; width: 26px; height: 26px; --dur: 6s;  animation-delay: 2s; }
+    .bubble:nth-child(10){ left: 76%; width: 17px; height: 17px; --dur: 4.5s; animation-delay: 0.5s; }
+    .bubble:nth-child(11){ left: 89%; width: 20px; height: 20px; --dur: 5.5s; animation-delay: 1.5s; }
+
+    @keyframes bob {
+      0%, 100% { transform: translateY(0) translateX(0); }
+      50%      { transform: translateY(-15vh) translateX(10px); }
+    }
+
+    /* ---------- Layout ---------- */
+    .wrap {
+      position: relative;
+      z-index: 1;
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    header.top {
+      text-align: center;
+      padding: 40px 0 12px;
+    }
+
+    .logo {
+      font-size: 3.4rem;
+      font-weight: 800;
+      letter-spacing: 1px;
+      background: linear-gradient(90deg, #ffe89a, #ffffff, #b8f7c8);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: wobble 3s ease-in-out infinite;
+      display: inline-block;
+    }
+
+    @keyframes wobble {
+      0%, 100% { transform: rotate(0deg) translateY(0); }
+      25%      { transform: rotate(-1.2deg) translateY(-3px); }
+      75%      { transform: rotate(1.2deg) translateY(-3px); }
+    }
+
+    .tagline {
+      font-size: 1.15rem;
+      opacity: 0.9;
+      margin-top: 6px;
+      font-style: italic;
+    }
+
+    /* ---------- Hero frog ---------- */
+    .hero {
+      text-align: center;
+      margin: 20px 0 10px;
+    }
+
+    .frog-scene {
+      position: relative;
+      display: inline-block;
+      margin: 0 auto;
+    }
+
+    .lily-pad {
+      width: 260px;
+      height: 74px;
+      background: radial-gradient(ellipse at center, #3da35d, #1f7a3e 70%, #16622f);
+      border-radius: 50%;
+      margin: 0 auto;
+      box-shadow: inset 0 -10px 18px rgba(0,0,0,0.25), 0 14px 30px rgba(0,0,0,0.35);
+      position: relative;
+      animation: padBob 5s ease-in-out infinite;
+    }
+    .lily-pad::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: -12px;
+      width: 0; height: 0;
+      border-left: 12px solid transparent;
+      border-right: 12px solid transparent;
+      border-bottom: 14px solid #1f7a3e;
+      transform: translateX(-50%);
+    }
+
+    @keyframes padBob {
+      0%, 100% { transform: translateY(0); }
+      50%      { transform: translateY(-8px); }
+    }
+
+    .frog {
+      width: 190px;
+      margin: 24px auto -26px;
+      position: relative;
+      z-index: 2;
+      animation: hop 4s ease-in-out infinite;
+      display: block;
+      filter: drop-shadow(0 18px 14px rgba(0,0,0,0.35));
+    }
+
+    @keyframes hop {
+      0%, 36%, 100% { transform: translateY(0) rotate(0deg); }
+      38%           { transform: translateY(0) rotate(-4deg); }
+      45%           { transform: translateY(-34px) rotate(2deg) scale(1.02); }
+      52%           { transform: translateY(0) rotate(3deg); }
+      56%           { transform: translateY(0) rotate(0deg); }
+    }
+
+    .frog-glow {
+      position: absolute;
+      inset: -30px;
+      background: radial-gradient(circle, rgba(255,220,120,0.35), transparent 65%);
+      border-radius: 50%;
+      animation: glowPulse 3s ease-in-out infinite;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    @keyframes glowPulse {
+      0%, 100% { opacity: 0.5; transform: scale(1); }
+      50%      { opacity: 1;    transform: scale(1.08); }
+    }
+
+    /* ---------- Sections ---------- */
+    .card {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 22px;
+      padding: 30px 34px;
+      margin: 34px 0;
+      backdrop-filter: blur(6px);
+      box-shadow: 0 14px 34px rgba(0,0,0,0.22);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 22px 44px rgba(0,0,0,0.3);
+    }
+
+    h2 {
+      font-size: 1.7rem;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    h2 .dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--sun);
+      animation: blip 1.6s ease-in-out infinite;
+    }
+    @keyframes blip {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50%      { transform: scale(1.5); opacity: 0.6; }
+    }
+
+    /* Facts grid */
+    .facts {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 18px;
+    }
+    .fact {
+      background: rgba(0, 0, 0, 0.18);
+      border-radius: 16px;
+      padding: 18px;
+      border-left: 4px solid var(--lily);
+      transition: transform 0.25s ease, background 0.25s ease;
+      animation: slideUp 0.6s ease backwards;
+    }
+    .fact:nth-child(1) { animation-delay: 0.05s; }
+    .fact:nth-child(2) { animation-delay: 0.15s; }
+    .fact:nth-child(3) { animation-delay: 0.25s; }
+    .fact:nth-child(4) { animation-delay: 0.35s; }
+    .fact:nth-child(5) { animation-delay: 0.45s; }
+    .fact:nth-child(6) { animation-delay: 0.55s; }
+    .fact:hover {
+      transform: translateY(-5px) rotate(-0.6deg);
+      background: rgba(0, 0, 0, 0.28);
+    }
+    .fact .icon { font-size: 1.6rem; }
+    .fact p { margin-top: 6px; font-size: 0.98rem; opacity: 0.95; }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Lifecycle */
+    .lifecycle {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 14px;
+      text-align: center;
+    }
+    .stage {
+      background: rgba(0,0,0,0.16);
+      border-radius: 14px;
+      padding: 16px 10px;
+      transition: transform 0.25s ease;
+      position: relative;
+    }
+    .stage:hover { transform: translateY(-5px) scale(1.04); }
+    .stage .emoji { font-size: 2.6rem; display: block; animation: bounce 2s ease-in-out infinite; }
+    .stage:nth-child(2) .emoji { animation-delay: 0.4s; }
+    .stage:nth-child(3) .emoji { animation-delay: 0.8s; }
+    .stage:nth-child(4) .emoji { animation-delay: 1.2s; }
+    .stage:nth-child(5) .emoji { animation-delay: 1.6s; }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50%      { transform: translateY(-8px); }
+    }
+    .stage .name { font-weight: 700; display: block; margin-top: 6px; }
+    .stage .desc { font-size: 0.82rem; opacity: 0.85; margin-top: 4px; }
+    .stage .num {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      font-size: 0.75rem;
+      font-weight: 800;
+      color: var(--sun);
+      opacity: 0.8;
+    }
+
+    /* Jump meter */
+    .jump-row {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      gap: 14px;
+      margin: 12px 0;
+      font-size: 0.95rem;
+    }
+    .bar {
+      height: 14px;
+      border-radius: 20px;
+      background: rgba(0,0,0,0.3);
+      overflow: hidden;
+    }
+    .bar span {
+      display: block;
+      height: 100%;
+      border-radius: 20px;
+      background: linear-gradient(90deg, var(--lily), var(--sun));
+      animation: growBar 1.4s cubic-bezier(0.2, 0.8, 0.3, 1) forwards;
+      transform-origin: left;
+      transform: scaleX(0);
+    }
+    .jump-row:nth-child(2) .bar span { animation: growBar 1.4s 0.2s  cubic-bezier(0.2,0.8,0.3,1) forwards; }
+    .jump-row:nth-child(3) .bar span { animation: growBar 1.4s 0.4s  cubic-bezier(0.2,0.8,0.3,1) forwards; }
+    .jump-row:nth-child(4) .bar span { animation: growBar 1.4s 0.6s  cubic-bezier(0.2,0.8,0.3,1) forwards; }
+    .jump-row:nth-child(5) .bar span { animation: growBar 1.4s 0.8s  cubic-bezier(0.2,0.8,0.3,1) forwards; }
+    @keyframes growBar {
+      to { transform: scaleX(1); }
+    }
+    .bar[data-r="0.5"] span { width: 50%; }
+    .bar[data-r="0.7"] span { width: 70%; }
+    .bar[data-r="1"] span  { width: 100%; }
+    .bar[data-r="0.9"] span { width: 90%; }
+
+    /* Quote */
+    .quote {
+      text-align: center;
+      padding: 40px 34px;
+      font-size: 1.25rem;
+      font-style: italic;
+      position: relative;
+    }
+    .quote::before {
+      content: "\201C";
+      position: absolute;
+      top: 4px;
+      left: 24px;
+      font-size: 4rem;
+      opacity: 0.35;
+      color: var(--sun);
+      font-family: Georgia, serif;
+    }
+    .quote .credit {
+      display: block;
+      margin-top: 10px;
+      font-size: 0.9rem;
+      font-style: normal;
+      opacity: 0.75;
+    }
+
+    /* Ribbit button */
+    .btn-ribbit {
+      margin: 30px auto 0;
+      display: block;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--deep);
+      background: linear-gradient(90deg, var(--sun), #ffd98e);
+      border: none;
+      border-radius: 40px;
+      padding: 14px 34px;
+      cursor: pointer;
+      box-shadow: 0 10px 22px rgba(0,0,0,0.28);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      letter-spacing: 0.5px;
+    }
+    .btn-ribbit:hover {
+      transform: translateY(-3px) scale(1.04);
+      box-shadow: 0 16px 30px rgba(0,0,0,0.35);
+    }
+    .btn-ribbit:active { transform: scale(0.96); }
+    .ribbit-out {
+      margin-top: 14px;
+      font-size: 1.5rem;
+      font-weight: 700;
+      min-height: 2.2em;
+      text-align: center;
+      animation: pop 0.3s ease;
+    }
+    @keyframes pop {
+      from { transform: scale(0.6); opacity: 0; }
+      to   { transform: scale(1); opacity: 1; }
+    }
+
+    footer.bot {
+      text-align: center;
+      padding: 26px 0 34px;
+      opacity: 0.8;
+      font-size: 0.9rem;
+    }
+    footer.bot .heart { color: #ff6b6b; }
+
+    /* ---------- Responsive ---------- */
+    @media (max-width: 600px) {
+      .logo { font-size: 2.5rem; }
+      .card { padding: 22px 20px; }
+      .frog { width: 150px; }
+      .lily-pad { width: 200px; height: 58px; }
+      .quote { font-size: 1.1rem; padding: 34px 22px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { animation: none !important; transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- floating background leaves & bubbles -->
+  <div class="leaf"></div><div class="leaf"></div><div class="leaf"></div>
+  <div class="leaf"></div><div class="leaf"></div><div class="leaf"></div>
+  <div class="bubble"></div><div class="bubble"></div><div class="bubble"></div>
+  <div class="bubble"></div><div class="bubble"></div>
+
+  <div class="wrap">
+
+    <header class="top">
+      <h1 class="logo">🐸 Ribbit! 🐸</h1>
+      <p class="tagline">A tiny web pond dedicated to the world's friendliest amphibian.</p>
+    </header>
+
+    <!-- Hero frog under the lily pad -->
+    <section class="hero">
+      <div class="frog-scene">
+        <div class="frog-glow"></div>
+        <!-- Frog drawn in SVG for a crisp, custom look -->
+        <svg class="frog" viewBox="0 0 200 160" role="img" aria-label="A happy green frog sitting on a lily pad">
+          <!-- back legs -->
+          <ellipse cx="52" cy="118" rx="24" ry="16" fill="#3c9c47" />
+          <ellipse cx="148" cy="118" rx="24" ry="16" fill="#3c9c47" />
+          <!-- body -->
+          <ellipse cx="100" cy="100" rx="55" ry="42" fill="#4caf50" />
+          <!-- belly -->
+          <ellipse cx="100" cy="108" rx="36" ry="26" fill="#d7ffd9" />
+          <!-- back feet -->
+          <path d="M28 130 q-6 14 6 12 q8 4 12 -6" fill="#3c9c47" />
+          <path d="M172 130 q6 14 -6 12 q-8 4 -12 -6" fill="#3c9c47" />
+          <!-- front arms -->
+          <path d="M52 92 q-18 10 -14 26 q12 8 20 -2" fill="#4caf50" stroke="#3c9c47" stroke-width="2.5" />
+          <path d="M148 92 q18 10 14 26 q-12 8 -20 -2" fill="#4caf50" stroke="#3c9c47" stroke-width="2.5" />
+          <!-- eyes -->
+          <circle cx="72" cy="54" r="16" fill="#4caf50" stroke="#3c9c47" stroke-width="2.5" />
+          <circle cx="128" cy="54" r="16" fill="#4caf50" stroke="#3c9c47" stroke-width="2.5" />
+          <circle cx="72" cy="54" r="10" fill="#fff" />
+          <circle cx="128" cy="54" r="10" fill="#fff" />
+          <circle cx="74" cy="53" r="5.5" fill="#161616" />
+          <circle cx="126" cy="53" r="5.5" fill="#161616" />
+          <circle cx="76" cy="51" r="1.8" fill="#fff" />
+          <circle cx="128" cy="51" r="1.8" fill="#fff" />
+          <!-- nostrils -->
+          <circle cx="94" cy="72" r="2.2" fill="#2e5d33" />
+          <circle cx="106" cy="72" r="2.2" fill="#2e5d33" />
+          <!-- smile -->
+          <path d="M84 84 Q100 96 116 84" fill="none" stroke="#2e5d33" stroke-width="3" stroke-linecap="round" />
+          <!-- cheeks -->
+          <circle cx="66" cy="86" r="7" fill="#ff8a8a" opacity="0.5" />
+          <circle cx="134" cy="86" r="7" fill="#ff8a8a" opacity="0.5" />
+        </svg>
+        <div class="lily-pad" title="Lily pad"></div>
+      </div>
+    </section>
+
+    <!-- Frog facts -->
+    <section class="card">
+      <h2><span class="dot"></span> Froggy Facts</h2>
+      <div class="facts">
+        <div class="fact">
+          <span class="icon">🏆</span>
+          <p>Champion jumpers! A frog's back legs can launch it up to <strong>20 times</strong> its own body length.</p>
+        </div>
+        <div class="fact">
+          <span class="icon">👀</span>
+          <p>Their eyes bulge to <strong>swallow their food</strong> — they push food down with their eyeballs. Yes, really!</p>
+        </div>
+        <div class="fact">
+          <span class="icon">🫁</span>
+          <p>Frogs breathe through their skin too — some can even <strong>hibernate underwater</strong> all winter.</p>
+        </div>
+        <div class="fact">
+          <span class="icon">🔊</span>
+          <p>Gulp, gulp, gulp — frogs swallow with their eyes closed and their <strong>eardrums on the outside</strong> of their heads.</p>
+        </div>
+        <div class="fact">
+          <span class="icon">❄️</span>
+          <p>The frozen <strong>wood frog</strong> can have 65% of its body freeze solid — then hop away in the spring!</p>
+        </div>
+        <div class="fact">
+          <span class="icon">🌍</span>
+          <p>There are about <strong>7,000 species</strong> of frogs and toads hopping across every continent except Antarctica.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Life cycle -->
+    <section class="card">
+      <h2><span class="dot"></span> Tadpole to Troubadour</h2>
+      <div class="lifecycle">
+        <div class="stage">
+          <span class="num">1</span>
+          <span class="emoji">🥚</span>
+          <span class="name">Eggs</span>
+          <span class="desc">Jelly-clad clusters, laid in water.</span>
+        </div>
+        <div class="stage">
+          <span class="num">2</span>
+          <span class="emoji">🐟</span>
+          <span class="name">Tadpole</span>
+          <span class="desc">Breathes with gills, swims like a fish.</span>
+        </div>
+        <div class="stage">
+          <span class="num">3</span>
+          <span class="emoji">🐸</span>
+          <span class="name">Froglet</span>
+          <span class="desc">Grows legs, loses that tail!</span>
+        </div>
+        <div class="stage">
+          <span class="num">4</span>
+          <span class="emoji">🦗</span>
+          <span class="name">Muncher</span>
+          <span class="desc">Eats 100+ bugs a night.</span>
+        </div>
+        <div class="stage">
+          <span class="num">5</span>
+          <span class="emoji">📣</span>
+          <span class="name">Crooner</span>
+          <span class="desc">Sings the loudest pond hits.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Jump stats -->
+    <section class="card">
+      <h2><span class="dot"></span> Leap Leaderboard</h2>
+      <p style="margin-bottom: 6px;">Typical jump distances (honed by millions of years of snack-chasing):</p>
+      <div class="jump-row">
+        <span>🐸 Tree frog</span>
+        <div class="bar" data-r="0.5"><span></span></div>
+        <span>~2 m</span>
+      </div>
+      <div class="jump-row">
+        <span>🐸 Bullfrog</span>
+        <div class="bar" data-r="0.7"><span></span></div>
+        <span>~3 m</span>
+      </div>
+      <div class="jump-row">
+        <span>🐸 Rocket frog</span>
+        <div class="bar" data-r="0.9"><span></span></div>
+        <span>~10 m</span>
+      </div>
+      <div class="jump-row">
+        <span>🚀 South African sharp-nosed</span>
+        <div class="bar" data-r="1"><span></span></div>
+        <span>~12 m!</span>
+      </div>
+    </section>
+
+    <!-- Quote -->
+    <section class="card quote">
+      "Toads are warts and I. — wait. Am I a toad? Ribbit-ribbit, I forget."
+      <span class="credit">— Anonymous Frog, probably</span>
+    </section>
+
+    <!-- Ribbit button -->
+    <button class="btn-ribbit" id="ribbitBtn">🐸 Press for a ribbit</button>
+    <div class="ribbit-out" id="ribbitOut" aria-live="polite"></div>
+
+    <footer class="bot">
+      Made with <span class="heart">❤</span> and a lot of bug-hunting · Ribbit © 2026 · Frog World Industries 🪷
+    </footer>
+  </div>
+
+  <script>
+    const btn = document.getElementById("ribbitBtn");
+    const out = document.getElementById("ribbitOut");
+    const ribbits = [
+      '"Ribbit!"', '"Ribbit-ribbit!"', '"CROOOAK!"',
+      '"Gribbit!"', '"Ribbert-ribbert!"', '"...ribbit."', '"BIRB-BIRB!"'
+    ];
+    const frogFacts = [
+      "Fun fact: frogs never blink — they have 3 eyelids but wave a transparent one to keep their eyes wet!",
+      "Fun fact: a group of frogs is called an army. 🫡",
+      "Fun fact: some frogs can survive being frozen solid during winter.",
+      "Fun fact: frogs drink water through their skin, not their mouths!",
+      "Fun fact: the tiny Paedophryne amauensis is smaller than a paperclip."
+    ];
+    let i = 0;
+    btn.addEventListener("click", () => {
+      const line = (i++ % 3 === 2)
+        ? frogFacts[Math.floor(Math.random() * frogFacts.length)]
+        : ribbits[Math.floor(Math.random() * ribbits.length)];
+      out.textContent = line;
+      out.style.animation = "none";
+      void out.offsetWidth;
+      out.style.animation = "pop 0.3s ease";
+    });
+  </script>
+</body>
+</html>
