@@ -638,6 +638,42 @@
 </head>
 <body>
 
+  <!-- SVG symbol definitions -->
+  <svg style="display:none;" aria-hidden="true">
+    <symbol id="frog-symbol" viewBox="0 0 200 160">
+      <!-- back legs -->
+      <ellipse cx="52" cy="118" rx="24" ry="16" fill="#3c9c47" />
+      <ellipse cx="148" cy="118" rx="24" ry="16" fill="#3c9c47" />
+      <!-- body -->
+      <ellipse cx="100" cy="100" rx="55" ry="42" fill="#4caf50" />
+      <!-- belly -->
+      <ellipse cx="100" cy="108" rx="36" ry="26" fill="#d7ffd9" />
+      <!-- back feet -->
+      <path d="M28 130 q-6 14 6 12 q8 4 12 -6" fill="#3c9c47" />
+      <path d="M172 130 q6 14 -6 12 q-8 4 -12 -6" fill="#3c9c47" />
+      <!-- front arms -->
+      <path d="M52 92 q-18 10 -14 26 q12 8 20 -2" fill="#4caf50" stroke="#3c9c47" stroke-width="2.5" />
+      <path d="M148 92 q18 10 14 26 q-12 8 -20 -2" fill="#4caf50" stroke="#3c9c47" stroke-width="2.5" />
+      <!-- eyes -->
+      <circle cx="72" cy="54" r="16" fill="#4caf50" stroke="#3c9c47" stroke-width="2.5" />
+      <circle cx="128" cy="54" r="16" fill="#4caf50" stroke="#3c9c47" stroke-width="2.5" />
+      <circle cx="72" cy="54" r="10" fill="#fff" />
+      <circle cx="128" cy="54" r="10" fill="#fff" />
+      <circle cx="74" cy="53" r="5.5" fill="#161616" />
+      <circle cx="126" cy="53" r="5.5" fill="#161616" />
+      <circle cx="76" cy="51" r="1.8" fill="#fff" />
+      <circle cx="128" cy="51" r="1.8" fill="#fff" />
+      <!-- nostrils -->
+      <circle cx="94" cy="72" r="2.2" fill="#2e5d33" />
+      <circle cx="106" cy="72" r="2.2" fill="#2e5d33" />
+      <!-- smile -->
+      <path d="M84 84 Q100 96 116 84" fill="none" stroke="#2e5d33" stroke-width="3" stroke-linecap="round" />
+      <!-- cheeks -->
+      <circle cx="66" cy="86" r="7" fill="#ff8a8a" opacity="0.5" />
+      <circle cx="134" cy="86" r="7" fill="#ff8a8a" opacity="0.5" />
+    </symbol>
+  </svg>
+
   <!-- Live frog mood status bar -->
   <div class="moodbar" role="status" aria-live="polite">
     🐸 Frog Mood: <span id="moodEmoji" class="mood-emoji">😄</span>
@@ -661,38 +697,8 @@
     <section class="hero">
       <div class="frog-scene">
         <div class="frog-glow"></div>
-        <!-- Frog drawn in SVG for a crisp, custom look -->
         <svg class="frog" viewBox="0 0 200 160" role="img" aria-label="A happy green frog sitting on a lily pad">
-          <!-- back legs -->
-          <ellipse cx="52" cy="118" rx="24" ry="16" fill="#3c9c47" />
-          <ellipse cx="148" cy="118" rx="24" ry="16" fill="#3c9c47" />
-          <!-- body -->
-          <ellipse cx="100" cy="100" rx="55" ry="42" fill="#4caf50" />
-          <!-- belly -->
-          <ellipse cx="100" cy="108" rx="36" ry="26" fill="#d7ffd9" />
-          <!-- back feet -->
-          <path d="M28 130 q-6 14 6 12 q8 4 12 -6" fill="#3c9c47" />
-          <path d="M172 130 q6 14 -6 12 q-8 4 -12 -6" fill="#3c9c47" />
-          <!-- front arms -->
-          <path d="M52 92 q-18 10 -14 26 q12 8 20 -2" fill="#4caf50" stroke="#3c9c47" stroke-width="2.5" />
-          <path d="M148 92 q18 10 14 26 q-12 8 -20 -2" fill="#4caf50" stroke="#3c9c47" stroke-width="2.5" />
-          <!-- eyes -->
-          <circle cx="72" cy="54" r="16" fill="#4caf50" stroke="#3c9c47" stroke-width="2.5" />
-          <circle cx="128" cy="54" r="16" fill="#4caf50" stroke="#3c9c47" stroke-width="2.5" />
-          <circle cx="72" cy="54" r="10" fill="#fff" />
-          <circle cx="128" cy="54" r="10" fill="#fff" />
-          <circle cx="74" cy="53" r="5.5" fill="#161616" />
-          <circle cx="126" cy="53" r="5.5" fill="#161616" />
-          <circle cx="76" cy="51" r="1.8" fill="#fff" />
-          <circle cx="128" cy="51" r="1.8" fill="#fff" />
-          <!-- nostrils -->
-          <circle cx="94" cy="72" r="2.2" fill="#2e5d33" />
-          <circle cx="106" cy="72" r="2.2" fill="#2e5d33" />
-          <!-- smile -->
-          <path d="M84 84 Q100 96 116 84" fill="none" stroke="#2e5d33" stroke-width="3" stroke-linecap="round" />
-          <!-- cheeks -->
-          <circle cx="66" cy="86" r="7" fill="#ff8a8a" opacity="0.5" />
-          <circle cx="134" cy="86" r="7" fill="#ff8a8a" opacity="0.5" />
+          <use href="#frog-symbol"></use>
         </svg>
         <div class="lily-pad" title="Click me! Lily pad"></div>
       </div>
@@ -714,27 +720,7 @@
         <div class="pond-pad" style="left: 80%; bottom: 10%; animation-delay: 1.7s;"></div>
         <!-- Playable frog -->
         <svg class="game-frog" id="gameFrog" viewBox="0 0 200 160" role="img" aria-label="Playable frog — click to jump">
-          <ellipse cx="52" cy="118" rx="24" ry="16" fill="#3c9c47" />
-          <ellipse cx="148" cy="118" rx="24" ry="16" fill="#3c9c47" />
-          <ellipse cx="100" cy="100" rx="55" ry="42" fill="#4caf50" />
-          <ellipse cx="100" cy="108" rx="36" ry="26" fill="#d7ffd9" />
-          <path d="M28 130 q-6 14 6 12 q8 4 12 -6" fill="#3c9c47" />
-          <path d="M172 130 q6 14 -6 12 q-8 4 -12 -6" fill="#3c9c47" />
-          <path d="M52 92 q-18 10 -14 26 q12 8 20 -2" fill="#4caf50" stroke="#3c9c47" stroke-width="2.5" />
-          <path d="M148 92 q18 10 14 26 q-12 8 -20 -2" fill="#4caf50" stroke="#3c9c47" stroke-width="2.5" />
-          <circle cx="72" cy="54" r="16" fill="#4caf50" stroke="#3c9c47" stroke-width="2.5" />
-          <circle cx="128" cy="54" r="16" fill="#4caf50" stroke="#3c9c47" stroke-width="2.5" />
-          <circle cx="72" cy="54" r="10" fill="#fff" />
-          <circle cx="128" cy="54" r="10" fill="#fff" />
-          <circle cx="74" cy="53" r="5.5" fill="#161616" />
-          <circle cx="126" cy="53" r="5.5" fill="#161616" />
-          <circle cx="76" cy="51" r="1.8" fill="#fff" />
-          <circle cx="128" cy="51" r="1.8" fill="#fff" />
-          <circle cx="94" cy="72" r="2.2" fill="#2e5d33" />
-          <circle cx="106" cy="72" r="2.2" fill="#2e5d33" />
-          <path d="M84 84 Q100 96 116 84" fill="none" stroke="#2e5d33" stroke-width="3" stroke-linecap="round" />
-          <circle cx="66" cy="86" r="7" fill="#ff8a8a" opacity="0.5" />
-          <circle cx="134" cy="86" r="7" fill="#ff8a8a" opacity="0.5" />
+          <use href="#frog-symbol"></use>
         </svg>
         <div class="pond-msg" id="pondMsg">Tap anywhere to start 🪰<small>Bite the flies, don't let 3 escape!</small></div>
         <div class="overlay" id="overlay" style="display: none;">
@@ -1247,8 +1233,11 @@
       return arr;
     }
 
+    let quizQuestions = [];
+
     function startQuiz() {
       quizIdx = 0; quizScore = 0; quizDone = false;
+      quizQuestions = shuffleArray([...quizData]).slice(0, 5);
       quizResult.style.display = 'none';
       quizBox.style.display = 'block';
       quizStart.style.display = 'none';
@@ -1257,9 +1246,8 @@
 
     function showQuizQuestion() {
       const total = 5;
-      const qs = shuffleArray([...quizData]).slice(0, total);
       quizProgress.textContent = `Question ${quizIdx + 1} of ${total}`;
-      const q = qs[quizIdx];
+      const q = quizQuestions[quizIdx];
       quizQuestion.textContent = q.q;
       quizOptions.innerHTML = '';
       quizFeedback.textContent = '';
@@ -1275,24 +1263,23 @@
         btn.addEventListener('click', () => answerQuiz(i, q.ans));
         quizOptions.appendChild(btn);
       });
-      quizData._current = qs;
     }
 
     function answerQuiz(chosen, correct) {
-      const qs = quizData._current;
+      const qs = quizQuestions;
+      const answer = qs[quizIdx].ans;
       const buttons = quizOptions.querySelectorAll('.sound-btn');
       buttons.forEach((b, i) => {
         b.style.pointerEvents = 'none';
-        if (i === correct) b.style.borderColor = 'var(--lily)';
-        if (i === chosen && chosen !== correct) b.style.borderColor = '#ff6b6b';
+        if (i === answer) b.style.borderColor = 'var(--lily)';
+        if (i === chosen && chosen !== answer) b.style.borderColor = '#ff6b6b';
       });
-      const correct = qs[quizIdx].ans;
-      if (chosen === correct) {
+      if (chosen === answer) {
         quizScore++;
         quizFeedback.textContent = '✅ Correct!';
         quizFeedback.style.color = 'var(--lily)';
       } else {
-        quizFeedback.textContent = `❌ Nope — the answer was: ${qs[quizIdx].opts[correct]}`;
+        quizFeedback.textContent = `❌ Nope — the answer was: ${qs[quizIdx].opts[answer]}`;
         quizFeedback.style.color = '#ff6b6b';
       }
       quizNext.style.display = 'inline-block';
@@ -1321,7 +1308,6 @@
 
     /* ---------- 6. Dynamic pond extras: fish & dragonflies ---------- */
     const pondEl = document.getElementById('pond');
-    let pondCreatures = [];
 
     function spawnFish() {
       if (pondEl.style.display === 'none' && document.getElementById('overlay')) return;
@@ -1343,7 +1329,6 @@
         requestAnimationFrame(swim);
       };
       requestAnimationFrame(swim);
-      pondCreatures.push(fish);
     }
 
     function spawnDragonfly() {
@@ -1365,7 +1350,6 @@
         requestAnimationFrame(flutter);
       };
       requestAnimationFrame(flutter);
-      pondCreatures.push(df);
     }
 
     setInterval(() => {
