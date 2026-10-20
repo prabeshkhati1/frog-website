@@ -1,254 +1,1193 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="A playful, colorful celebration of frogs — the champions of ponds, lily pads, and all things ribbit." />
-  <title>Ribbit! A Frog's World</title>
+  <meta name="description" content="Ribbit.io — The world's most advanced amphibian platform. High-velocity bug catching, zero-latency bio-acoustics, and truly unlimited pond real estate." />
+  <title>Ribbit.io – Next-Gen Amphibian & Pond Platform</title>
+  
+  <!-- Preconnect to Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;500;600;700;800&family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Fragment+Mono&display=swap" rel="stylesheet">
+  
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐸</text></svg>">
   <link rel="stylesheet" href="./style.css">
 </head>
-<body>
+<body class="bg-[#f8fafc] text-[#1d1d1f] font-sans antialiased selection:bg-[#10b981] selection:text-white">
 
-  <!-- SVG symbol definitions -->
+  <!-- SVG symbol definitions for the frog -->
   <svg style="display:none;" aria-hidden="true">
     <symbol id="frog-symbol" viewBox="0 0 200 160">
       <!-- back legs -->
-      <ellipse cx="52" cy="118" rx="24" ry="16" fill="#3c9c47" />
-      <ellipse cx="148" cy="118" rx="24" ry="16" fill="#3c9c47" />
-      <!-- body -->
-      <ellipse cx="100" cy="100" rx="55" ry="42" fill="#4caf50" />
+      <ellipse cx="52" cy="118" rx="24" ry="16" fill="#059669" />
+      <ellipse cx="148" cy="118" rx="24" ry="16" fill="#059669" />
+      <!-- body with breathing pulse -->
+      <ellipse class="frog-body-ellipse" cx="100" cy="100" rx="55" ry="42" fill="#10b981" />
       <!-- belly -->
-      <ellipse cx="100" cy="108" rx="36" ry="26" fill="#d7ffd9" />
-      <!-- back feet -->
-      <path d="M28 130 q-6 14 6 12 q8 4 12 -6" fill="#3c9c47" />
-      <path d="M172 130 q6 14 -6 12 q-8 4 -12 -6" fill="#3c9c47" />
-      <!-- front arms -->
-      <path d="M52 92 q-18 10 -14 26 q12 8 20 -2" fill="#4caf50" stroke="#3c9c47" stroke-width="2.5" />
-      <path d="M148 92 q18 10 14 26 q-12 8 -20 -2" fill="#4caf50" stroke="#3c9c47" stroke-width="2.5" />
-      <!-- eyes -->
-      <circle cx="72" cy="54" r="16" fill="#4caf50" stroke="#3c9c47" stroke-width="2.5" />
-      <circle cx="128" cy="54" r="16" fill="#4caf50" stroke="#3c9c47" stroke-width="2.5" />
-      <circle cx="72" cy="54" r="10" fill="#fff" />
-      <circle cx="128" cy="54" r="10" fill="#fff" />
-      <circle cx="74" cy="53" r="5.5" fill="#161616" />
-      <circle cx="126" cy="53" r="5.5" fill="#161616" />
-      <circle cx="76" cy="51" r="1.8" fill="#fff" />
-      <circle cx="128" cy="51" r="1.8" fill="#fff" />
-      <!-- nostrils -->
-      <circle cx="94" cy="72" r="2.2" fill="#2e5d33" />
-      <circle cx="106" cy="72" r="2.2" fill="#2e5d33" />
-      <!-- smile -->
-      <path d="M84 84 Q100 96 116 84" fill="none" stroke="#2e5d33" stroke-width="3" stroke-linecap="round" />
-      <!-- cheeks -->
-      <circle cx="66" cy="86" r="7" fill="#ff8a8a" opacity="0.5" />
-      <circle cx="134" cy="86" r="7" fill="#ff8a8a" opacity="0.5" />
+      <ellipse cx="100" cy="108" rx="36" ry="26" fill="#6ee7b7" />
+      <!-- front legs -->
+      <ellipse cx="76" cy="122" rx="10" ry="14" fill="#059669" />
+      <ellipse cx="124" cy="122" rx="10" ry="14" fill="#059669" />
+      <!-- eyes outer -->
+      <circle cx="78" cy="68" r="18" fill="#10b981" />
+      <circle cx="122" cy="68" r="18" fill="#10b981" />
+      <circle cx="78" cy="68" r="14" fill="#ffffff" />
+      <circle cx="122" cy="68" r="14" fill="#ffffff" />
+      <!-- pupils (ID used in hero for 60fps mouse tracking) -->
+      <g id="heroEyeGroup">
+        <circle id="heroPupilLeft" class="frog-pupil" cx="80" cy="67" r="7" fill="#0f172a" />
+        <circle id="heroPupilRight" class="frog-pupil" cx="120" cy="67" r="7" fill="#0f172a" />
+      </g>
+      <!-- catchlights -->
+      <circle cx="78" cy="64" r="2.5" fill="#ffffff" />
+      <circle cx="118" cy="64" r="2.5" fill="#ffffff" />
+      <!-- eyelids for natural biological blinking animation -->
+      <g id="heroEyelids" class="pointer-events-none">
+        <ellipse id="eyelidLeft" class="frog-eyelid" cx="78" cy="68" rx="14.5" ry="14.5" fill="#059669" />
+        <ellipse id="eyelidRight" class="frog-eyelid" cx="122" cy="68" rx="14.5" ry="14.5" fill="#059669" />
+      </g>
+      <!-- mouth -->
+      <path d="M 85 96 Q 100 106 115 96" stroke="#065f46" stroke-width="3" fill="transparent" stroke-linecap="round" />
+      <!-- blush spots -->
+      <circle cx="68" cy="92" r="5" fill="#34d399" opacity="0.6" />
+      <circle cx="132" cy="92" r="5" fill="#34d399" opacity="0.6" />
     </symbol>
   </svg>
 
-  <!-- Live frog mood status bar -->
-  <div class="moodbar" role="status" aria-live="polite">
-    🐸 Frog Mood: <span id="moodEmoji" class="mood-emoji">😄</span>
-    <span id="moodLabel" style="color:#ffd98e;">Happy</span>
-  </div>
+  <!-- ========================================================================
+       SECTION 0: APPLE LIQUID GLASS FLOATING NAVBAR
+       ======================================================================== -->
+  <header class="fixed top-0 left-0 right-0 z-50 py-3.5 px-3 sm:px-6 transition-all duration-300">
+    <div class="apple-glass max-w-[1200px] mx-auto rounded-full px-5 sm:px-6 py-2.5 flex items-center justify-between gap-2 sm:gap-4 shadow-[0_4px_28px_rgba(0,0,0,0.06)]">
+      
+      <!-- Brand -->
+      <a href="#" class="flex items-center gap-2 group shrink-0">
+        <span class="text-2xl transform group-hover:scale-110 group-hover:rotate-6 transition-transform duration-300">🐸</span>
+        <div class="flex items-center gap-1.5">
+          <span class="font-display text-[19px] sm:text-[21px] font-bold text-[#1d1d1f] tracking-tight">Ribbit<span class="text-[#10b981]">.io</span></span>
+          <span class="font-mono text-[10px] font-semibold uppercase tracking-wider text-[#059669] bg-[#10b981]/15 px-2 py-0.5 rounded-full border border-[#10b981]/30">PRO v2.0</span>
+        </div>
+      </a>
 
-  <!-- floating background leaves & bubbles -->
-  <div class="leaf"></div><div class="leaf"></div><div class="leaf"></div>
-  <div class="leaf"></div><div class="leaf"></div><div class="leaf"></div>
-  <div class="bubble"></div><div class="bubble"></div><div class="bubble"></div>
-  <div class="bubble"></div><div class="bubble"></div>
+      <!-- Nav Links (Single line, zero word-wrapping) -->
+      <nav class="hidden lg:flex items-center gap-4 xl:gap-6 text-[13px] xl:text-[14px] font-medium text-[#4d585f]">
+        <a href="#playground" class="whitespace-nowrap hover:text-[#1d1d1f] transition-colors py-1">Playground</a>
+        <a href="#species" class="whitespace-nowrap hover:text-[#1d1d1f] transition-colors py-1">Species</a>
+        <a href="#comparison" class="whitespace-nowrap hover:text-[#1d1d1f] transition-colors py-1">Comparison</a>
+        <a href="#features" class="whitespace-nowrap hover:text-[#1d1d1f] transition-colors py-1">Features</a>
+        <a href="#choir" class="whitespace-nowrap hover:text-[#1d1d1f] transition-colors py-1">Choir</a>
+        <a href="#quiz" class="whitespace-nowrap hover:text-[#1d1d1f] transition-colors py-1">Quiz</a>
+        <a href="#pricing" class="whitespace-nowrap hover:text-[#1d1d1f] transition-colors py-1">Pricing</a>
+        <a href="#faqs" class="whitespace-nowrap hover:text-[#1d1d1f] transition-colors py-1">FAQs</a>
+      </nav>
 
-  <div class="wrap">
+      <!-- Right Controls -->
+      <div class="flex items-center gap-2.5 sm:gap-3 shrink-0">
+        <!-- Live Mood Status Bar Chip -->
+        <div class="hidden md:inline-flex items-center gap-2 px-3 py-1 rounded-full bg-black/[0.04] border border-black/[0.06] text-xs font-medium text-[#1d1d1f] whitespace-nowrap shrink-0 select-none" role="status">
+          <span>Mood:</span>
+          <span id="moodEmoji" class="text-sm">😄</span>
+          <span id="moodLabel" class="font-semibold text-[#059669]">Happy</span>
+        </div>
 
-    <header class="top">
-      <h1 class="logo">🐸 Ribbit! 🐸</h1>
-      <p class="tagline">A tiny web pond dedicated to the world's friendliest amphibian.</p>
-    </header>
-
-    <!-- Hero frog under the lily pad -->
-    <section class="hero">
-      <div class="frog-scene">
-        <div class="frog-glow"></div>
-        <svg class="frog" viewBox="0 0 200 160" role="img" aria-label="A happy green frog sitting on a lily pad">
-          <use href="#frog-symbol"></use>
-        </svg>
-        <div class="lily-pad" title="Click me! Lily pad"></div>
+        <a 
+          href="#pricing" 
+          class="apple-magnetic-btn whitespace-nowrap shrink-0 inline-flex items-center justify-center px-4 sm:px-5 py-2 text-[13px] sm:text-[14px] font-semibold text-white bg-[#1d1d1f] hover:bg-black rounded-full transition-all duration-300 shadow-sm hover:shadow hover:-translate-y-0.5"
+        >
+          Adopt a Frog
+        </a>
       </div>
-    </section>
+    </div>
+  </header>
 
-    <!-- Pond playground: game + interactive pond -->
-    <section class="card">
-      <h2><span class="dot"></span> Pond Playground</h2>
-      <p class="lead">🎯 Tap the frog to make it jump and bite a fly. Catch flies for points — let <strong>3 escape</strong> and the game's over. Tap the water for ripples, and tap the lily pads to make them bob.</p>
-      <div class="pond" id="pond">
-        <div class="waterline"></div>
-        <div class="hud">
-          <span class="chip">🪰 Score <b id="score">0</b></span>
-          <span class="chip">😱 Missed <b id="miss">0</b>/3</span>
-          <span class="chip">🏆 Best <b id="best">0</b></span>
-        </div>
-        <div class="pond-pad" style="left: 10%; bottom: 24%; animation-delay: 0.2s;"></div>
-        <div class="pond-pad" style="left: 62%; bottom: 34%; animation-delay: 1.1s;"></div>
-        <div class="pond-pad" style="left: 80%; bottom: 10%; animation-delay: 1.7s;"></div>
-        <!-- Playable frog -->
-        <svg class="game-frog" id="gameFrog" viewBox="0 0 200 160" role="img" aria-label="Playable frog — click to jump">
-          <use href="#frog-symbol"></use>
-        </svg>
-        <div class="pond-msg" id="pondMsg">Tap anywhere to start 🪰<small>Bite the flies, don't let 3 escape!</small></div>
-        <div class="overlay" id="overlay" style="display: none;">
-          <h3>Game Over 🫠</h3>
-          <div class="final">You caught <span id="finalScore">0</span> flies!</div>
-          <div class="new-high" id="newHigh"></div>
-          <button class="btn" id="restart">↻ Hop again</button>
-        </div>
+  <!-- ========================================================================
+       SECTION 1: HERO SECTION (APPLE KEYNOTE STAGE WITH 3D GLASS PERSPECTIVE)
+       ======================================================================== -->
+  <section class="relative pt-32 sm:pt-40 pb-20 sm:pb-32 overflow-hidden bg-gradient-to-b from-[#ecfdf5]/40 via-[#f8fafc] to-[#f8fafc]">
+    
+    <!-- Apple Studio Keynote Overhead Spotlight Beam -->
+    <div class="apple-overhead-spotlight absolute top-0 left-0 right-0 h-[600px] pointer-events-none z-0"></div>
+
+    <!-- 60FPS Ambient Particle Canvas -->
+    <canvas id="ambientCanvas" class="absolute inset-0 pointer-events-none z-0"></canvas>
+
+    <div class="max-w-[1200px] mx-auto px-4 sm:px-6 text-center relative z-10">
+      
+      <!-- Category Badge with Apple Metallic Specular Stroke -->
+      <div class="reveal-on-scroll inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/90 backdrop-blur-md border border-[#dde5ed] text-[13px] font-medium text-[#1d1d1f] mb-6 shadow-sm">
+        <span class="w-2 h-2 rounded-full bg-[#10b981] animate-pulse"></span>
+        <span>Next-Generation Amphibian Ecosystem</span>
       </div>
-    </section>
 
-    <!-- Frog facts -->
-    <section class="card">
-      <h2><span class="dot"></span> Froggy Facts</h2>
-      <div class="facts">
-        <div class="fact">
-          <span class="icon">🏆</span>
-          <p>Champion jumpers! A frog's back legs can launch it up to <strong>20 times</strong> its own body length.</p>
-        </div>
-        <div class="fact">
-          <span class="icon">👀</span>
-          <p>Their eyes bulge to <strong>swallow their food</strong> — they push food down with their eyeballs. Yes, really!</p>
-        </div>
-        <div class="fact">
-          <span class="icon">🫁</span>
-          <p>Frogs breathe through their skin too — some can even <strong>hibernate underwater</strong> all winter.</p>
-        </div>
-        <div class="fact">
-          <span class="icon">🔊</span>
-          <p>Gulp, gulp, gulp — frogs swallow with their eyes closed and their <strong>eardrums on the outside</strong> of their heads.</p>
-        </div>
-        <div class="fact">
-          <span class="icon">❄️</span>
-          <p>The frozen <strong>wood frog</strong> can have 65% of its body freeze solid — then hop away in the spring!</p>
-        </div>
-        <div class="fact">
-          <span class="icon">🌍</span>
-          <p>There are about <strong>7,000 species</strong> of frogs and toads hopping across every continent except Antarctica.</p>
-        </div>
+      <!-- Main Display Headline (Apple Typography Scale) -->
+      <h1 class="reveal-on-scroll stagger-1 font-display text-[48px] sm:text-[72px] lg:text-[96px] font-semibold text-[#1d1d1f] tracking-[-1.5px] leading-[1.02] max-w-[980px] mx-auto mb-6">
+        Unlimited<br />
+        <span class="bg-gradient-to-r from-[#1d1d1f] via-[#065f46] to-[#10b981] bg-clip-text text-transparent">Amphibian Power</span>
+      </h1>
+
+      <!-- Subtitle -->
+      <p class="reveal-on-scroll stagger-2 font-sans text-[16px] sm:text-[18px] text-[#4d585f] max-w-[640px] mx-auto leading-[1.6] mb-10">
+        The world’s most advanced amphibian platform. High-velocity bug catching, zero-latency bio-acoustics, and truly unlimited pond real estate.
+      </p>
+
+      <!-- Apple Tactile Magnetic CTAs -->
+      <div class="reveal-on-scroll stagger-3 flex flex-col sm:flex-row items-center justify-center gap-3.5 mb-12">
+        <a
+          href="#playground"
+          class="apple-magnetic-btn group inline-flex items-center justify-center gap-3 px-8 py-3.5 text-[15px] font-semibold text-white bg-[#1d1d1f] hover:bg-black rounded-full shadow-[0_4px_14px_rgba(29,29,29,0.2)] hover:shadow-[0_8px_25px_rgba(29,29,29,0.3)] transition-all duration-300"
+        >
+          <span>Launch Playground</span>
+          <span class="transition-transform duration-300 group-hover:translate-x-1">→</span>
+        </a>
+
+        <a
+          href="#choir"
+          class="apple-magnetic-btn group inline-flex items-center justify-center px-8 py-3.5 text-[15px] font-medium text-[#1d1d1f] bg-white hover:bg-gray-50 border border-[#dde5ed] rounded-full shadow-sm hover:shadow transition-all duration-300"
+        >
+          <span>🎵 The Frog Choir</span>
+        </a>
       </div>
-    </section>
 
-    <!-- Life cycle -->
-    <section class="card">
-      <h2><span class="dot"></span> Tadpole to Troubadour</h2>
-      <div class="lifecycle">
-        <div class="stage">
-          <span class="num">1</span>
-          <span class="emoji">🥚</span>
-          <span class="name">Eggs</span>
-          <span class="desc">Jelly-clad clusters, laid in water.</span>
+      <!-- Social Proof Feature Badges with Floating Physics -->
+      <div class="reveal-on-scroll stagger-4 flex flex-wrap items-center justify-center gap-3 sm:gap-4 mb-16 sm:mb-20">
+        <div class="float-badge-1 apple-glass inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-[13px] font-medium text-[#1d1d1f] shadow-sm">
+          <span class="text-[#ff8b06]">⭐</span>
+          <span>4.9/5 Hop Rating (20k+ Croaks)</span>
         </div>
-        <div class="stage">
-          <span class="num">2</span>
-          <span class="emoji">🐟</span>
-          <span class="name">Tadpole</span>
-          <span class="desc">Breathes with gills, swims like a fish.</span>
+        <div class="float-badge-2 apple-glass inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-[13px] font-medium text-[#1d1d1f] shadow-sm">
+          <span>🪰</span>
+          <span>100+ Bugs Intercepted / Night</span>
         </div>
-        <div class="stage">
-          <span class="num">3</span>
-          <span class="emoji">🐸</span>
-          <span class="name">Froglet</span>
-          <span class="desc">Grows legs, loses that tail!</span>
-        </div>
-        <div class="stage">
-          <span class="num">4</span>
-          <span class="emoji">🦗</span>
-          <span class="name">Muncher</span>
-          <span class="desc">Eats 100+ bugs a night.</span>
-        </div>
-        <div class="stage">
-          <span class="num">5</span>
-          <span class="emoji">📣</span>
-          <span class="name">Crooner</span>
-          <span class="desc">Sings the loudest pond hits.</span>
+        <div class="float-badge-3 apple-glass inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-[13px] font-medium text-[#1d1d1f] shadow-sm">
+          <span class="text-[#10b981]">⚡</span>
+          <span>20x Body Length Launch Velocity</span>
         </div>
       </div>
-    </section>
 
-    <!-- Jump stats -->
-    <section class="card">
-      <h2><span class="dot"></span> Leap Leaderboard</h2>
-      <p style="margin-bottom: 6px;">Typical jump distances (honed by millions of years of snack-chasing):</p>
-      <div class="jump-row">
-        <span>🐸 Tree frog</span>
-        <div class="bar" data-r="0.5"><span></span></div>
-        <span>~2 m</span>
-      </div>
-      <div class="jump-row">
-        <span>🐸 Bullfrog</span>
-        <div class="bar" data-r="0.7"><span></span></div>
-        <span>~3 m</span>
-      </div>
-      <div class="jump-row">
-        <span>🐸 Rocket frog</span>
-        <div class="bar" data-r="0.9"><span></span></div>
-        <span>~10 m</span>
-      </div>
-      <div class="jump-row">
-        <span>🚀 South African sharp-nosed</span>
-        <div class="bar" data-r="1"><span></span></div>
-        <span>~12 m!</span>
-      </div>
-    </section>
+      <!-- Hero Pond Composition Frame: Apple Studio Display Hardware Stage -->
+      <div class="relative max-w-[880px] mx-auto reveal-on-scroll">
+        
+        <!-- Ambient Glowing Aura Mesh -->
+        <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] h-[360px] bg-gradient-to-tr from-[#10b981]/25 via-[#38bdf8]/20 to-[#6366f1]/10 rounded-full blur-[90px] pointer-events-none"></div>
 
-    <!-- Frog quiz -->
-    <section class="card">
-      <h2><span class="dot"></span> 🐸 Frog Quiz</h2>
-      <p class="lead">Test your amphibian knowledge! Answer 5 questions and see your score.</p>
-      <div id="quizBox" style="display:none;">
-        <div id="quizProgress" style="font-size:0.85rem;opacity:0.8;margin-bottom:12px;"></div>
-        <div id="quizQuestion" style="font-size:1.15rem;font-weight:700;margin-bottom:16px;"></div>
-        <div id="quizOptions" style="display:grid;grid-template-columns:1fr 1fr;gap:10px;"></div>
-        <div id="quizFeedback" style="margin-top:14px;font-weight:700;min-height:1.6em;"></div>
-        <button class="btn" id="quizNext" style="margin-top:14px;display:none;">Next →</button>
+        <!-- Floating Glass Telemetry HUD Badges Pinned Over Corners -->
+        <!-- Top Left Badge -->
+        <div class="float-badge-1 apple-glass absolute -top-5 -left-4 sm:-left-8 z-30 hidden sm:flex items-center gap-2.5 px-4 py-2 rounded-2xl shadow-[0_12px_30px_rgba(0,0,0,0.08)]">
+          <span class="w-2.5 h-2.5 rounded-full bg-[#10b981] animate-ping"></span>
+          <div class="text-left">
+            <div class="text-[10px] font-mono uppercase tracking-wider text-[#86868b]">Ingress Velocity</div>
+            <div class="text-xs font-bold text-[#1d1d1f]">4.8 m/s (Optimal)</div>
+          </div>
+        </div>
+
+        <!-- Top Right Badge -->
+        <div class="float-badge-2 apple-glass absolute -top-5 -right-4 sm:-right-8 z-30 hidden sm:flex items-center gap-2.5 px-4 py-2 rounded-2xl shadow-[0_12px_30px_rgba(0,0,0,0.08)]">
+          <span class="text-base">💧</span>
+          <div class="text-left">
+            <div class="text-[10px] font-mono uppercase tracking-wider text-[#86868b]">Water Oxygen</div>
+            <div class="text-xs font-bold text-[#059669]">99.4% Bio-Filtered</div>
+          </div>
+        </div>
+
+        <!-- Bottom Right Badge -->
+        <div class="float-badge-3 apple-glass absolute -bottom-4 -right-4 sm:-right-6 z-30 hidden sm:flex items-center gap-2.5 px-4 py-2 rounded-2xl shadow-[0_12px_30px_rgba(0,0,0,0.08)]">
+          <span class="text-base">🔊</span>
+          <div class="text-left">
+            <div class="text-[10px] font-mono uppercase tracking-wider text-[#86868b]">Acoustic Frequency</div>
+            <div class="text-xs font-bold text-[#406ae4]">432 Hz Synthesized</div>
+          </div>
+        </div>
+
+        <!-- Main Window Stage (Apple 3D Perspective Tilt Card with Specular Glare) -->
+        <div class="apple-tilt-card apple-bezel rounded-[32px] p-2.5 sm:p-3 bg-white/85 backdrop-blur-xl border border-white/80 shadow-[0_30px_70px_-15px_rgba(0,0,0,0.1)]">
+          <div class="specular-glare"></div>
+
+          <!-- Apple Hardware Header Bar -->
+          <div class="px-4 py-2.5 bg-[#f8fafc]/90 rounded-t-[24px] border-b border-[#dde5ed] flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <span class="w-3 h-3 rounded-full bg-[#ff5f57] border border-[#e0443e]"></span>
+              <span class="w-3 h-3 rounded-full bg-[#febc2e] border border-[#d89e24]"></span>
+              <span class="w-3 h-3 rounded-full bg-[#28c840] border border-[#1aab29]"></span>
+            </div>
+            
+            <div class="hidden sm:inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/80 border border-[#dde5ed] text-[11px] font-mono text-[#86868b]">
+              <span>🔒 ribbit.io/wetlands/studio-pro-01</span>
+            </div>
+
+            <div class="flex items-center gap-1.5">
+              <span class="w-2 h-2 rounded-full bg-[#10b981] animate-pulse"></span>
+              <span class="text-[11px] font-mono font-semibold text-[#059669]">4K 60FPS HDR</span>
+            </div>
+          </div>
+
+          <!-- Interactive Studio Habitat Stage -->
+          <div class="relative rounded-b-[24px] bg-gradient-to-b from-[#e0f2fe]/70 via-[#ecfdf5]/85 to-[#d1fae5] p-10 sm:p-14 flex flex-col items-center justify-center overflow-hidden min-h-[350px]">
+            
+            <!-- Ambient water rings -->
+            <div class="absolute w-[420px] h-[420px] rounded-full border border-[#10b981]/25 animate-ping opacity-25 pointer-events-none"></div>
+            <div class="absolute w-[290px] h-[290px] rounded-full border border-[#406ae4]/20 animate-pulse pointer-events-none"></div>
+            
+            <!-- Hero Frog on Lily Pad (Biological Breathing + Eye-Tracking + Squash & Stretch Leap) -->
+            <div class="relative z-10 cursor-pointer frog-breathe" id="heroFrogClick" title="Tap or click to leap!">
+              <svg class="w-48 sm:w-60 h-auto filter drop-shadow-xl" viewBox="0 0 200 160">
+                <use href="#frog-symbol"></use>
+              </svg>
+              <!-- Lily pad base with gradient stroke -->
+              <div class="w-56 sm:w-72 h-14 bg-gradient-to-r from-[#059669] via-[#10b981] to-[#047857] rounded-full mx-auto -mt-6 border-2 border-[#064e3b]/30 shadow-md"></div>
+            </div>
+
+            <p class="mt-6 text-xs font-mono font-semibold uppercase tracking-wider text-[#065f46] bg-white/90 backdrop-blur-md px-4 py-1.5 rounded-full border border-[#a7f3d0] shadow-sm select-none">
+              Damped eye tracking active • Tap for spring leap 🐸
+            </p>
+          </div>
+        </div>
       </div>
-      <button class="btn" id="quizStart" style="margin-top:12px;">Start Quiz 🎯</button>
-      <div id="quizResult" style="margin-top:14px;display:none;"></div>
-    </section>
 
-    <!-- Quote -->
-    <section class="card quote">
-      "Toads are warts and I. — wait. Am I a toad? Ribbit-ribbit, I forget."
-      <span class="credit">— Anonymous Frog, probably</span>
-    </section>
+    </div>
+  </section>
 
-    <!-- Frog choir: Web Audio ribbits -->
-    <section class="card">
-      <h2><span class="dot"></span> The Frog Choir</h2>
-      <p class="lead">Live synthesized ribbits, straight from the Web Audio API — no audio files, just pure oscillator math.</p>
-      <div class="sound-row">
-        <button class="sound-btn" id="smallFrog" type="button">
-          <span class="sb-icon">🐸</span>
-          <span class="sb-name">Small frog</span>
-          <span class="sb-desc">Fast, high-pitched peep</span>
+  <!-- ========================================================================
+       SECTION 2: SPECIES MARQUEE (60FPS GPU CONTINUOUS TICKER)
+       ======================================================================== -->
+  <section class="py-12 bg-white border-y border-[#dde5ed]/70 overflow-hidden" id="species">
+    <div class="max-w-[1200px] mx-auto px-4 mb-6 text-center reveal-on-scroll">
+      <p class="text-[13px] font-mono font-semibold text-[#86868b] tracking-wider uppercase">
+        Trusted by 7,000+ amphibian species across 6 continents
+      </p>
+    </div>
+
+    <!-- Ticker with fade mask -->
+    <div class="relative w-full overflow-hidden mask-fade-x">
+      <div class="flex w-max animate-ticker items-center gap-8 sm:gap-10 py-2">
+        <!-- Loop 1 -->
+        <span class="text-sm font-semibold text-[#1d1d1f] bg-[#f8fafc] border border-[#dde5ed] px-4 py-2 rounded-full flex items-center gap-2 hover:border-[#10b981] transition-colors shadow-sm">
+          <span>🐸</span> Tree Frog <span class="font-mono text-xs text-[#86868b]">(Hyla arborea)</span>
+        </span>
+        <span class="text-sm font-semibold text-[#1d1d1f] bg-[#f8fafc] border border-[#dde5ed] px-4 py-2 rounded-full flex items-center gap-2 hover:border-[#10b981] transition-colors shadow-sm">
+          <span>🟡</span> Poison Dart Frog <span class="font-mono text-xs text-[#86868b]">(Dendrobatidae)</span>
+        </span>
+        <span class="text-sm font-semibold text-[#1d1d1f] bg-[#f8fafc] border border-[#dde5ed] px-4 py-2 rounded-full flex items-center gap-2 hover:border-[#10b981] transition-colors shadow-sm">
+          <span>🔊</span> American Bullfrog <span class="font-mono text-xs text-[#86868b]">(L. catesbeianus)</span>
+        </span>
+        <span class="text-sm font-semibold text-[#1d1d1f] bg-[#f8fafc] border border-[#dde5ed] px-4 py-2 rounded-full flex items-center gap-2 hover:border-[#10b981] transition-colors shadow-sm">
+          <span>🪟</span> Glass Frog <span class="font-mono text-xs text-[#86868b]">(Centrolenidae)</span>
+        </span>
+        <span class="text-sm font-semibold text-[#1d1d1f] bg-[#f8fafc] border border-[#dde5ed] px-4 py-2 rounded-full flex items-center gap-2 hover:border-[#10b981] transition-colors shadow-sm">
+          <span>❄️</span> Alaskan Wood Frog <span class="font-mono text-xs text-[#86868b]">(L. sylvaticus)</span>
+        </span>
+        <span class="text-sm font-semibold text-[#1d1d1f] bg-[#f8fafc] border border-[#dde5ed] px-4 py-2 rounded-full flex items-center gap-2 hover:border-[#10b981] transition-colors shadow-sm">
+          <span>🏆</span> Goliath Frog <span class="font-mono text-xs text-[#86868b]">(Conraua goliath)</span>
+        </span>
+        <span class="text-sm font-semibold text-[#1d1d1f] bg-[#f8fafc] border border-[#dde5ed] px-4 py-2 rounded-full flex items-center gap-2 hover:border-[#10b981] transition-colors shadow-sm">
+          <span>👀</span> Red-Eyed Tree Frog <span class="font-mono text-xs text-[#86868b]">(A. callidryas)</span>
+        </span>
+        <span class="text-sm font-semibold text-[#1d1d1f] bg-[#f8fafc] border border-[#dde5ed] px-4 py-2 rounded-full flex items-center gap-2 hover:border-[#10b981] transition-colors shadow-sm">
+          <span>🍅</span> Tomato Frog <span class="font-mono text-xs text-[#86868b]">(Dyscophus)</span>
+        </span>
+
+        <!-- Loop 2 (Identical duplicate for seamless 60fps loop) -->
+        <span class="text-sm font-semibold text-[#1d1d1f] bg-[#f8fafc] border border-[#dde5ed] px-4 py-2 rounded-full flex items-center gap-2 hover:border-[#10b981] transition-colors shadow-sm">
+          <span>🐸</span> Tree Frog <span class="font-mono text-xs text-[#86868b]">(Hyla arborea)</span>
+        </span>
+        <span class="text-sm font-semibold text-[#1d1d1f] bg-[#f8fafc] border border-[#dde5ed] px-4 py-2 rounded-full flex items-center gap-2 hover:border-[#10b981] transition-colors shadow-sm">
+          <span>🟡</span> Poison Dart Frog <span class="font-mono text-xs text-[#86868b]">(Dendrobatidae)</span>
+        </span>
+        <span class="text-sm font-semibold text-[#1d1d1f] bg-[#f8fafc] border border-[#dde5ed] px-4 py-2 rounded-full flex items-center gap-2 hover:border-[#10b981] transition-colors shadow-sm">
+          <span>🔊</span> American Bullfrog <span class="font-mono text-xs text-[#86868b]">(L. catesbeianus)</span>
+        </span>
+        <span class="text-sm font-semibold text-[#1d1d1f] bg-[#f8fafc] border border-[#dde5ed] px-4 py-2 rounded-full flex items-center gap-2 hover:border-[#10b981] transition-colors shadow-sm">
+          <span>🪟</span> Glass Frog <span class="font-mono text-xs text-[#86868b]">(Centrolenidae)</span>
+        </span>
+        <span class="text-sm font-semibold text-[#1d1d1f] bg-[#f8fafc] border border-[#dde5ed] px-4 py-2 rounded-full flex items-center gap-2 hover:border-[#10b981] transition-colors shadow-sm">
+          <span>❄️</span> Alaskan Wood Frog <span class="font-mono text-xs text-[#86868b]">(L. sylvaticus)</span>
+        </span>
+        <span class="text-sm font-semibold text-[#1d1d1f] bg-[#f8fafc] border border-[#dde5ed] px-4 py-2 rounded-full flex items-center gap-2 hover:border-[#10b981] transition-colors shadow-sm">
+          <span>🏆</span> Goliath Frog <span class="font-mono text-xs text-[#86868b]">(Conraua goliath)</span>
+        </span>
+        <span class="text-sm font-semibold text-[#1d1d1f] bg-[#f8fafc] border border-[#dde5ed] px-4 py-2 rounded-full flex items-center gap-2 hover:border-[#10b981] transition-colors shadow-sm">
+          <span>👀</span> Red-Eyed Tree Frog <span class="font-mono text-xs text-[#86868b]">(A. callidryas)</span>
+        </span>
+        <span class="text-sm font-semibold text-[#1d1d1f] bg-[#f8fafc] border border-[#dde5ed] px-4 py-2 rounded-full flex items-center gap-2 hover:border-[#10b981] transition-colors shadow-sm">
+          <span>🍅</span> Tomato Frog <span class="font-mono text-xs text-[#86868b]">(Dyscophus)</span>
+        </span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       SECTION 3: COMPARISON (TRADITIONAL SWAMP VS APPLE PRO HABITAT)
+       ======================================================================== -->
+  <section class="py-24 sm:py-32 bg-[#f8fafc]" id="comparison">
+    <div class="max-w-[1200px] mx-auto px-4 sm:px-6">
+      
+      <div class="text-center max-w-[800px] mx-auto mb-16 sm:mb-20 reveal-on-scroll">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#edf1f4] text-[13px] font-medium text-[#1d1d1f] mb-4">
+          <span>Comparison</span>
+        </div>
+        <h2 class="font-display text-[36px] sm:text-[48px] font-semibold text-[#1d1d1f] tracking-[-0.8px] leading-[1.15] mb-4">
+          Smarter Amphibian Life Starts With Modern Ponds
+        </h2>
+        <p class="text-[16px] sm:text-[18px] text-[#4d585f]">
+          See how the Ribbit.io platform upgrades everyday pond living compared to traditional wild swamps.
+        </p>
+      </div>
+
+      <!-- 2-Column Grid with Apple 3D Perspective Tilt -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
+        
+        <!-- Before Card (Alert Warning Tone) -->
+        <div class="apple-tilt-card rounded-[28px] bg-white border border-[#fecaca] p-8 sm:p-10 shadow-sm flex flex-col justify-between relative overflow-hidden reveal-on-scroll stagger-1">
+          <div class="specular-glare"></div>
+          <div class="absolute top-0 left-0 right-0 h-1 bg-[#f51c23]/80"></div>
+          
+          <div>
+            <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#f51c23]/10 text-[#f51c23] text-[13px] font-semibold mb-6">
+              <span>⚠️</span>
+              <span>Traditional Wild Swamp</span>
+            </div>
+            <h3 class="font-display text-[26px] sm:text-[30px] font-semibold text-[#1d1d1f] mb-6 leading-snug">
+              The Problem With Stagnant Mud Pits
+            </h3>
+            <div class="space-y-4 mb-8">
+              <div class="flex items-start gap-3">
+                <span class="text-[#f51c23] font-bold text-lg leading-none mt-0.5">✕</span>
+                <p class="text-[15px] sm:text-[16px] text-[#4d585f]">
+                  <strong class="text-[#1d1d1f] font-medium">Stagnant, murky water</strong> choking with duckweed and low dissolved oxygen.
+                </p>
+              </div>
+              <div class="flex items-start gap-3">
+                <span class="text-[#f51c23] font-bold text-lg leading-none mt-0.5">✕</span>
+                <p class="text-[15px] sm:text-[16px] text-[#4d585f]">
+                  <strong class="text-[#1d1d1f] font-medium">Inconsistent insect supply</strong> causing hunger and energy dips.
+                </p>
+              </div>
+              <div class="flex items-start gap-3">
+                <span class="text-[#f51c23] font-bold text-lg leading-none mt-0.5">✕</span>
+                <p class="text-[15px] sm:text-[16px] text-[#4d585f]">
+                  <strong class="text-[#1d1d1f] font-medium">Harsh winter freezing</strong> without organized hibernation shelter.
+                </p>
+              </div>
+              <div class="flex items-start gap-3">
+                <span class="text-[#f51c23] font-bold text-lg leading-none mt-0.5">✕</span>
+                <p class="text-[15px] sm:text-[16px] text-[#4d585f]">
+                  <strong class="text-[#1d1d1f] font-medium">Chaotic pond acoustics</strong> drowning out individual courtship croaks.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Metrics with 60fps counter data -->
+          <div class="pt-6 border-t border-gray-100 grid grid-cols-2 gap-4">
+            <div class="bg-[#f8fafc] rounded-2xl p-4 border border-[#dde5ed]">
+              <div class="font-display text-[32px] sm:text-[36px] font-bold text-[#f51c23] leading-none mb-1">
+                <span class="stat-counter" data-target="95">95</span>%
+              </div>
+              <div class="text-[13px] text-[#86868b]">Mosquito Infestation</div>
+            </div>
+            <div class="bg-[#f8fafc] rounded-2xl p-4 border border-[#dde5ed]">
+              <div class="font-display text-[32px] sm:text-[36px] font-bold text-[#f51c23] leading-none mb-1">
+                <span class="stat-counter" data-target="60">60</span>%
+              </div>
+              <div class="text-[13px] text-[#86868b]">Habitat Degradation</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- After Card: Apple Space Black Material with Specular Sheen -->
+        <div class="apple-tilt-card apple-glass-dark rounded-[28px] text-white p-8 sm:p-10 shadow-2xl flex flex-col justify-between relative overflow-hidden reveal-on-scroll stagger-2">
+          <div class="specular-glare specular-glare-dark"></div>
+          <div class="absolute top-0 left-0 right-0 h-1 bg-[#10b981]"></div>
+          
+          <div>
+            <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#10b981]/20 text-[#10b981] text-[13px] font-semibold mb-6 border border-[#10b981]/30">
+              <span>✨</span>
+              <span>The Ribbit.io Ecosystem</span>
+            </div>
+            <h3 class="font-display text-[26px] sm:text-[30px] font-semibold text-white mb-6 leading-snug">
+              The Modern Amphibian Advantage
+            </h3>
+            <div class="space-y-4 mb-8">
+              <div class="flex items-start gap-3">
+                <span class="text-[#10b981] font-bold text-lg leading-none mt-0.5">✓</span>
+                <p class="text-[15px] sm:text-[16px] text-gray-300">
+                  <strong class="text-white font-medium">Crystal clear oxygenated waters</strong> with automated biological bio-filtration.
+                </p>
+              </div>
+              <div class="flex items-start gap-3">
+                <span class="text-[#10b981] font-bold text-lg leading-none mt-0.5">✓</span>
+                <p class="text-[15px] sm:text-[16px] text-gray-300">
+                  <strong class="text-white font-medium">Unlimited organic fly distribution</strong> at 200ms interception speeds.
+                </p>
+              </div>
+              <div class="flex items-start gap-3">
+                <span class="text-[#10b981] font-bold text-lg leading-none mt-0.5">✓</span>
+                <p class="text-[15px] sm:text-[16px] text-gray-300">
+                  <strong class="text-white font-medium">Cryo-sleep climate controls</strong> tailored for wood frogs and overwintering.
+                </p>
+              </div>
+              <div class="flex items-start gap-3">
+                <span class="text-[#10b981] font-bold text-lg leading-none mt-0.5">✓</span>
+                <p class="text-[15px] sm:text-[16px] text-gray-300">
+                  <strong class="text-white font-medium">Synthesized Web Audio choir</strong> with zero acoustic phase interference.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Metrics with 60fps counter data -->
+          <div class="pt-6 border-t border-white/10 grid grid-cols-2 gap-4">
+            <div class="bg-white/5 rounded-2xl p-4 border border-white/10">
+              <div class="font-display text-[32px] sm:text-[36px] font-bold text-[#10b981] leading-none mb-1">
+                <span class="stat-counter" data-target="100">100</span>%
+              </div>
+              <div class="text-[13px] text-gray-400">Unlimited Fly Ingress</div>
+            </div>
+            <div class="bg-white/5 rounded-2xl p-4 border border-white/10">
+              <div class="font-display text-[32px] sm:text-[36px] font-bold text-[#10b981] leading-none mb-1">
+                <span class="stat-counter" data-target="10">10</span>x
+              </div>
+              <div class="text-[13px] text-gray-400">Longer Hop Lifespan</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       SECTION 4: POND PLAYGROUND (APPLE ARCADE WETLAND ENGINE)
+       ======================================================================== -->
+  <section class="py-24 sm:py-32 bg-white border-t border-[#dde5ed]/70" id="playground">
+    <div class="max-w-[1200px] mx-auto px-4 sm:px-6">
+      
+      <div class="text-center max-w-[800px] mx-auto mb-12 sm:mb-16 reveal-on-scroll">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#edf1f4] text-[13px] font-medium text-[#1d1d1f] mb-4">
+          <span>Interactive Playground</span>
+        </div>
+        <h2 class="font-display text-[36px] sm:text-[48px] font-semibold text-[#1d1d1f] tracking-[-0.8px] leading-[1.15] mb-4">
+          Pond Playground: Fly Interception Engine
+        </h2>
+        <p class="text-[16px] sm:text-[18px] text-[#4d585f]">
+          Tap anywhere or click the frog to jump and snap flies mid-air. Catch bugs for points — let <strong>3 escape</strong> and the session ends.
+        </p>
+      </div>
+
+      <!-- Playground Outer Frame: Apple Arcade Stage with 3D Tilt -->
+      <div class="apple-tilt-card apple-bezel max-w-[1020px] mx-auto rounded-[32px] bg-white border border-[#dde5ed] p-3 sm:p-5 shadow-[0_25px_60px_rgba(0,0,0,0.08)] reveal-on-scroll">
+        <div class="specular-glare"></div>
+
+        <!-- Arena Subbar -->
+        <div class="flex items-center justify-between px-3 py-2 mb-3 bg-[#f8fafc] rounded-2xl border border-[#dde5ed]">
+          <div class="flex items-center gap-2 text-xs font-semibold text-[#1d1d1f]">
+            <span class="w-2.5 h-2.5 rounded-full bg-[#10b981] animate-pulse"></span>
+            <span>APPLE WETLAND ENGINE • 60 FPS ARCADE</span>
+          </div>
+          <div class="text-xs font-mono text-[#86868b]">
+            Physics: Damped Spring Leap
+          </div>
+        </div>
+
+        <div 
+          id="pond" 
+          class="relative w-full h-[420px] sm:h-[480px] rounded-2xl bg-gradient-to-b from-[#e0f2fe] via-[#bae6fd]/50 to-[#38bdf8]/40 overflow-hidden border border-[#93c5fd]/50 cursor-pointer select-none"
+        >
+          <!-- Water Surface Line -->
+          <div class="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#0284c7]/30 to-transparent pointer-events-none"></div>
+
+          <!-- Floating Glass HUD -->
+          <div class="absolute top-4 left-4 right-4 flex items-center justify-between z-30 pointer-events-none">
+            <div class="flex items-center gap-2">
+              <span class="apple-glass inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-semibold text-[#1d1d1f] shadow-sm">
+                <span>🪰</span> Score <b id="score" class="font-mono text-[#10b981] ml-1">0</b>
+              </span>
+              <span class="apple-glass inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-semibold text-[#1d1d1f] shadow-sm">
+                <span>⚠️</span> Missed <b id="miss" class="font-mono text-[#f51c23] ml-1">0</b>/3
+              </span>
+            </div>
+            <span class="apple-glass inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-semibold text-[#1d1d1f] shadow-sm">
+              <span>🏆</span> Best <b id="best" class="font-mono text-[#ff8b06] ml-1">0</b>
+            </span>
+          </div>
+
+          <!-- Lily Pads -->
+          <div class="pond-pad absolute left-[12%] bottom-[22%] w-24 h-6 bg-[#10b981] rounded-full border-2 border-[#059669] opacity-80" style="animation-delay: 0.2s;"></div>
+          <div class="pond-pad absolute left-[65%] bottom-[28%] w-28 h-7 bg-[#10b981] rounded-full border-2 border-[#059669] opacity-80" style="animation-delay: 1.1s;"></div>
+          <div class="pond-pad absolute left-[82%] bottom-[12%] w-20 h-5 bg-[#10b981] rounded-full border-2 border-[#059669] opacity-80" style="animation-delay: 1.7s;"></div>
+
+          <!-- Playable Frog -->
+          <svg 
+            class="game-frog absolute left-1/2 bottom-8 -translate-x-1/2 w-32 sm:w-36 h-auto z-20 cursor-pointer drop-shadow-md" 
+            id="gameFrog" 
+            viewBox="0 0 200 160"
+          >
+            <use href="#frog-symbol"></use>
+          </svg>
+
+          <!-- Start Message Pill -->
+          <div 
+            id="pondMsg" 
+            class="apple-glass absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 px-6 py-4 rounded-3xl border border-white/80 shadow-2xl text-center pointer-events-none"
+          >
+            <div class="font-display text-lg font-bold text-[#1d1d1f] mb-1">Tap anywhere to launch 🪰</div>
+            <div class="text-xs text-[#4d585f]">Intercept descending bugs — don't let 3 hit the water!</div>
+          </div>
+
+          <!-- Game Over Modal Overlay: Apple VisionOS Glass Dialog -->
+          <div 
+            id="overlay" 
+            class="absolute inset-0 bg-black/30 backdrop-blur-md z-40 flex items-center justify-center text-center p-4" 
+            style="display: none;"
+          >
+            <div class="apple-glass rounded-[32px] p-6 sm:p-8 max-w-sm w-full shadow-2xl border border-white/80 animate-in zoom-in-95 duration-200">
+              <span class="text-4xl mb-2 block">🐸</span>
+              <h3 class="font-display text-2xl font-bold text-[#1d1d1f] mb-1">Pond Game Over</h3>
+              <div class="text-sm text-[#4d585f] mb-3">
+                You intercepted <span id="finalScore" class="font-bold text-[#10b981] text-lg">0</span> flies!
+              </div>
+              <div id="newHigh" class="text-xs font-mono font-bold text-[#ff8b06] mb-5"></div>
+              <button 
+                id="restart" 
+                class="apple-magnetic-btn w-full py-3 px-6 rounded-full text-sm font-semibold text-white bg-[#10b981] hover:bg-[#059669] transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5"
+              >
+                Play Again 🔄
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       SECTION 5: APPLE BENTO GRID (WITH SIRI-STYLE AUDIO WAVEFORM CANVAS)
+       ======================================================================== -->
+  <section class="py-24 sm:py-32 bg-[#f8fafc] border-t border-[#dde5ed]/70" id="features">
+    <div class="max-w-[1200px] mx-auto px-4 sm:px-6">
+      
+      <div class="text-center max-w-[800px] mx-auto mb-16 sm:mb-20 reveal-on-scroll">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white border border-[#dde5ed] text-[13px] font-medium text-[#1d1d1f] mb-4 shadow-sm">
+          <span>Core features</span>
+        </div>
+        <h2 class="font-display text-[36px] sm:text-[48px] font-semibold text-[#1d1d1f] tracking-[-0.8px] leading-[1.15] mb-4">
+          Everything an amphibian needs to dominate the ecosystem
+        </h2>
+        <p class="text-[16px] sm:text-[18px] text-[#4d585f]">
+          From supersonic ocular swallowing mechanics to cryogenic winter freeze survival.
+        </p>
+      </div>
+
+      <!-- Bento Grid with 3D Perspective Tilt -->
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+        
+        <!-- Bento 1: Leap Propulsion (6 cols) -->
+        <div class="apple-tilt-card md:col-span-6 rounded-[28px] bg-white border border-[#dde5ed] p-8 sm:p-10 flex flex-col justify-between shadow-sm hover:border-[#10b981]/50 transition-colors reveal-on-scroll stagger-1">
+          <div class="specular-glare"></div>
+          <div>
+            <div class="w-12 h-12 rounded-2xl bg-[#ecfdf5] border border-[#a7f3d0] flex items-center justify-center text-xl mb-6 shadow-sm">
+              🏆
+            </div>
+            <h3 class="font-display text-[24px] font-semibold text-[#1d1d1f] mb-3">
+              Extreme Leap Propulsion
+            </h3>
+            <p class="text-[15px] text-[#4d585f] leading-relaxed mb-6">
+              Honed by millions of years of snack-chasing. Back leg muscle bundles can launch a frog up to <strong>20x its own body length</strong>.
+            </p>
+          </div>
+
+          <!-- Animated Launch Bars with Scrubber Progress -->
+          <div class="space-y-3.5 bg-[#f8fafc] p-4 rounded-2xl border border-[#dde5ed]">
+            <div class="flex items-center justify-between text-xs">
+              <span class="font-medium text-[#1d1d1f]">Tree Frog</span>
+              <span class="font-mono text-[#86868b]">~2 m</span>
+            </div>
+            <div class="h-2 w-full bg-gray-200 rounded-full overflow-hidden">
+              <div class="h-full bg-[#10b981] rounded-full w-[25%] transition-all duration-1000"></div>
+            </div>
+
+            <div class="flex items-center justify-between text-xs pt-1">
+              <span class="font-medium text-[#1d1d1f]">Bullfrog</span>
+              <span class="font-mono text-[#86868b]">~3 m</span>
+            </div>
+            <div class="h-2 w-full bg-gray-200 rounded-full overflow-hidden">
+              <div class="h-full bg-[#10b981] rounded-full w-[38%] transition-all duration-1000"></div>
+            </div>
+
+            <div class="flex items-center justify-between text-xs pt-1">
+              <span class="font-medium text-[#1d1d1f]">Rocket Frog</span>
+              <span class="font-mono text-[#86868b]">~10 m</span>
+            </div>
+            <div class="h-2 w-full bg-gray-200 rounded-full overflow-hidden">
+              <div class="h-full bg-[#406ae4] rounded-full w-[85%] transition-all duration-1000"></div>
+            </div>
+
+            <div class="flex items-center justify-between text-xs pt-1">
+              <span class="font-medium text-[#1d1d1f] font-bold">🚀 Sharp-Nosed Frog</span>
+              <span class="font-mono font-bold text-[#10b981]">~12 m!</span>
+            </div>
+            <div class="h-2 w-full bg-gray-200 rounded-full overflow-hidden">
+              <div class="h-full bg-gradient-to-r from-[#10b981] to-[#ff8b06] rounded-full w-[100%] transition-all duration-1000"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bento 2: Metamorphosis Lifecycle (6 cols) -->
+        <div class="apple-tilt-card md:col-span-6 rounded-[28px] bg-white border border-[#dde5ed] p-8 sm:p-10 flex flex-col justify-between shadow-sm hover:border-[#10b981]/50 transition-colors reveal-on-scroll stagger-2">
+          <div class="specular-glare"></div>
+          <div>
+            <div class="w-12 h-12 rounded-2xl bg-[#eff6ff] border border-[#bfdbfe] flex items-center justify-center text-xl mb-6 shadow-sm">
+              🌱
+            </div>
+            <h3 class="font-display text-[24px] font-semibold text-[#1d1d1f] mb-3">
+              Tadpole to Troubadour
+            </h3>
+            <p class="text-[15px] text-[#4d585f] leading-relaxed mb-6">
+              Complete biological transformation from aquatic gill-breather to loud, high-jumping terrestrial insect eater.
+            </p>
+          </div>
+
+          <!-- 5 Steps with Apple Spring Micro-Interaction -->
+          <div class="grid grid-cols-5 gap-2 text-center">
+            <div class="bg-[#f8fafc] p-2.5 rounded-2xl border border-[#dde5ed] hover:-translate-y-1.5 transition-transform duration-200 cursor-pointer">
+              <span class="text-lg block mb-1">🥚</span>
+              <span class="text-[11px] font-bold block text-[#1d1d1f]">1. Eggs</span>
+              <span class="text-[10px] text-[#86868b]">Jelly clusters</span>
+            </div>
+            <div class="bg-[#f8fafc] p-2.5 rounded-2xl border border-[#dde5ed] hover:-translate-y-1.5 transition-transform duration-200 cursor-pointer">
+              <span class="text-lg block mb-1">🐟</span>
+              <span class="text-[11px] font-bold block text-[#1d1d1f]">2. Tadpole</span>
+              <span class="text-[10px] text-[#86868b]">Gills & tail</span>
+            </div>
+            <div class="bg-[#f8fafc] p-2.5 rounded-2xl border border-[#dde5ed] hover:-translate-y-1.5 transition-transform duration-200 cursor-pointer">
+              <span class="text-lg block mb-1">🐸</span>
+              <span class="text-[11px] font-bold block text-[#1d1d1f]">3. Froglet</span>
+              <span class="text-[10px] text-[#86868b]">Grows legs</span>
+            </div>
+            <div class="bg-[#f8fafc] p-2.5 rounded-2xl border border-[#dde5ed] hover:-translate-y-1.5 transition-transform duration-200 cursor-pointer">
+              <span class="text-lg block mb-1">🦗</span>
+              <span class="text-[11px] font-bold block text-[#1d1d1f]">4. Muncher</span>
+              <span class="text-[10px] text-[#86868b]">100+ bugs</span>
+            </div>
+            <div class="bg-[#ecfdf5] p-2.5 rounded-2xl border border-[#10b981]/50 hover:-translate-y-1.5 transition-transform duration-200 cursor-pointer">
+              <span class="text-lg block mb-1">📣</span>
+              <span class="text-[11px] font-bold block text-[#065f46]">5. Crooner</span>
+              <span class="text-[10px] text-[#047857]">Pond star</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bento 3: The Frog Choir with LIVE Apple Siri Waveform Canvas (8 cols) -->
+        <div class="apple-tilt-card md:col-span-8 rounded-[28px] bg-white border border-[#dde5ed] p-8 sm:p-10 flex flex-col justify-between shadow-sm hover:border-[#10b981]/50 transition-colors reveal-on-scroll stagger-3" id="choir">
+          <div class="specular-glare"></div>
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <div class="w-12 h-12 rounded-2xl bg-[#ecfdf5] border border-[#a7f3d0] flex items-center justify-center text-xl shadow-sm">
+                🎵
+              </div>
+
+              <!-- Apple Audio Status Chip -->
+              <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#f8fafc] border border-[#dde5ed] text-[11px] font-mono text-[#059669]">
+                <span class="w-2 h-2 rounded-full bg-[#10b981] animate-pulse"></span>
+                <span>WEB AUDIO ENGINE 60FPS</span>
+              </div>
+            </div>
+
+            <h3 class="font-display text-[24px] font-semibold text-[#1d1d1f] mb-2">
+              The Web Audio Synthesizer Choir
+            </h3>
+            <p class="text-[15px] text-[#4d585f] leading-relaxed mb-4 max-w-[620px]">
+              Live synthesized ribbits generated directly from your browser's Web Audio API with multi-oscillator frequency modulation and harmonic sound envelopes.
+            </p>
+
+            <!-- Apple Siri / Voice Memos Style 60FPS Waveform Canvas -->
+            <div class="w-full h-16 rounded-2xl bg-[#f8fafc] border border-[#dde5ed] overflow-hidden mb-6 relative flex items-center justify-center">
+              <canvas id="audioWaveformCanvas" class="w-full h-full block"></canvas>
+            </div>
+          </div>
+
+          <!-- 3 Interactive Sound Buttons with Apple Magnetic Feel -->
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <button 
+              id="smallFrog" 
+              type="button"
+              class="apple-magnetic-btn sound-btn text-left p-4 rounded-2xl bg-[#f8fafc] border border-[#dde5ed] hover:border-[#10b981] hover:-translate-y-0.5 transition-all duration-200 group focus:outline-none"
+            >
+              <span class="text-2xl block mb-2 group-hover:scale-110 transition-transform">🐸</span>
+              <span class="font-display text-sm font-bold text-[#1d1d1f] block">Small Frog</span>
+              <span class="text-xs text-[#86868b]">Fast, high-pitched peep</span>
+            </button>
+
+            <button 
+              id="bigFrog" 
+              type="button"
+              class="apple-magnetic-btn sound-btn text-left p-4 rounded-2xl bg-[#f8fafc] border border-[#dde5ed] hover:border-[#10b981] hover:-translate-y-0.5 transition-all duration-200 group focus:outline-none"
+            >
+              <span class="text-2xl block mb-2 group-hover:scale-110 transition-transform">🐸</span>
+              <span class="font-display text-sm font-bold text-[#1d1d1f] block">Big Bullfrog</span>
+              <span class="text-xs text-[#86868b]">Deep bass croak</span>
+            </button>
+
+            <button 
+              id="chorusBtn" 
+              type="button"
+              class="apple-magnetic-btn sound-btn text-left p-4 rounded-2xl bg-[#f8fafc] border border-[#dde5ed] hover:border-[#10b981] hover:-translate-y-0.5 transition-all duration-200 group focus:outline-none"
+            >
+              <span class="text-2xl block mb-2 group-hover:scale-110 transition-transform">🎤</span>
+              <span class="font-display text-sm font-bold text-[#1d1d1f] block">Full Pond Chorus</span>
+              <span class="text-xs text-[#86868b]">7 frogs harmonizing</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Bento 4: Ribbit & Quote Synthesizer (4 cols) -->
+        <div class="apple-tilt-card md:col-span-4 rounded-[28px] bg-[#f8fafc] border border-[#dde5ed] p-8 sm:p-10 flex flex-col justify-between shadow-sm reveal-on-scroll stagger-4">
+          <div class="specular-glare"></div>
+          <div>
+            <div class="w-12 h-12 rounded-2xl bg-white border border-[#dde5ed] flex items-center justify-center text-xl mb-6 shadow-sm">
+              💬
+            </div>
+            <h3 class="font-display text-[22px] font-semibold text-[#1d1d1f] mb-2">
+              Instant Croak Generator
+            </h3>
+            <p class="text-[14px] text-[#4d585f] leading-relaxed mb-6">
+              Press to generate authentic amphibian quotes, facts, and vocalizations.
+            </p>
+          </div>
+
+          <div>
+            <button 
+              id="ribbitBtn"
+              class="apple-magnetic-btn w-full py-3.5 px-6 rounded-full text-sm font-semibold text-white bg-[#10b981] hover:bg-[#059669] hover:-translate-y-0.5 transition-all shadow-md flex items-center justify-center gap-2 mb-4"
+            >
+              <span>🐸</span> Press for a Ribbit
+            </button>
+            <div 
+              id="ribbitOut" 
+              class="min-h-[48px] p-3 rounded-2xl bg-white border border-[#dde5ed] text-xs font-mono text-[#1d1d1f] flex items-center justify-center text-center italic shadow-inner"
+            >
+              "Ribbit-ribbit!"
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       SECTION 6: INTERACTIVE AMPHIBIAN QUIZ (ELEVATED APPLE TEST CARD)
+       ======================================================================== -->
+  <section class="py-24 sm:py-32 bg-white border-t border-[#dde5ed]/70" id="quiz">
+    <div class="max-w-[1200px] mx-auto px-4 sm:px-6">
+      
+      <div class="text-center max-w-[800px] mx-auto mb-16 reveal-on-scroll">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#edf1f4] text-[13px] font-medium text-[#1d1d1f] mb-4">
+          <span>Knowledge Check</span>
+        </div>
+        <h2 class="font-display text-[36px] sm:text-[48px] font-semibold text-[#1d1d1f] tracking-[-0.8px] leading-[1.15] mb-4">
+          Test Your Amphibian Intelligence
+        </h2>
+        <p class="text-[16px] sm:text-[18px] text-[#4d585f]">
+          Answer 5 randomized biological questions and see how your frog IQ measures up.
+        </p>
+      </div>
+
+      <!-- Quiz Card Container -->
+      <div class="apple-tilt-card max-w-[740px] mx-auto rounded-[32px] bg-[#f8fafc] border border-[#dde5ed] p-8 sm:p-12 shadow-md text-center reveal-on-scroll">
+        <div class="specular-glare"></div>
+        
+        <!-- Start screen -->
+        <div id="quizStartView">
+          <span class="text-5xl block mb-4 animate-bounce">🎯</span>
+          <h3 class="font-display text-2xl font-bold text-[#1d1d1f] mb-2">5 Fast Questions</h3>
+          <p class="text-sm text-[#4d585f] mb-8 max-w-md mx-auto">
+            Covers jump distances, eye swallowing, freeze tolerance, and amphibian anatomy.
+          </p>
+          <button 
+            id="quizStart" 
+            class="apple-magnetic-btn inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-full text-[15px] font-semibold text-white bg-[#1d1d1f] hover:bg-black hover:-translate-y-0.5 transition-all shadow-md"
+          >
+            Start Quiz Now →
+          </button>
+        </div>
+
+        <!-- Question View (Hidden Initially) -->
+        <div id="quizBox" style="display: none;" class="text-left">
+          
+          <!-- Progress Header Bar -->
+          <div class="pb-4 mb-5 border-b border-gray-200">
+            <div class="flex items-center justify-between mb-2">
+              <span id="quizProgress" class="font-mono text-xs font-semibold text-[#10b981] uppercase tracking-wider"></span>
+              <span class="text-xs text-[#86868b]">Select the best answer</span>
+            </div>
+            <!-- Progress Line -->
+            <div class="h-1.5 w-full bg-gray-200 rounded-full overflow-hidden">
+              <div id="quizProgressBar" class="h-full bg-[#10b981] rounded-full transition-all duration-300 w-1/5"></div>
+            </div>
+          </div>
+
+          <div id="quizQuestion" class="font-display text-xl sm:text-2xl font-semibold text-[#1d1d1f] mb-6"></div>
+          
+          <div id="quizOptions" class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6"></div>
+          
+          <div id="quizFeedback" class="text-sm font-semibold min-h-[28px] mb-4"></div>
+          
+          <button 
+            id="quizNext" 
+            style="display: none;" 
+            class="apple-magnetic-btn inline-flex items-center justify-center gap-2 px-7 py-3 rounded-full text-sm font-semibold text-white bg-[#10b981] hover:bg-[#059669] hover:-translate-y-0.5 transition-all shadow-md"
+          >
+            Next Question →
+          </button>
+        </div>
+
+        <!-- Result View -->
+        <div id="quizResult" style="display: none;" class="text-center py-6"></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       SECTION 7: ADOPTION PLANS & PRICING
+       ======================================================================== -->
+  <section class="py-24 sm:py-32 bg-[#f8fafc] border-t border-[#dde5ed]/70" id="pricing">
+    <div class="max-w-[1200px] mx-auto px-4 sm:px-6">
+      
+      <div class="text-center max-w-[800px] mx-auto mb-12 sm:mb-16 reveal-on-scroll">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white border border-[#dde5ed] text-[13px] font-medium text-[#1d1d1f] mb-4 shadow-sm">
+          <span>Adoption Plans</span>
+        </div>
+        <h2 class="font-display text-[36px] sm:text-[48px] font-semibold text-[#1d1d1f] tracking-[-0.8px] leading-[1.15] mb-4">
+          Transparent pond plans without hidden costs
+        </h2>
+        <p class="text-[16px] sm:text-[18px] text-[#4d585f]">
+          Support global amphibian preservation or secure VIP access to your own private pond sanctuary.
+        </p>
+      </div>
+
+      <!-- Monthly / Yearly Toggle (Aligned with 50% discount tag) -->
+      <div class="reveal-on-scroll flex items-center justify-center gap-3.5 mb-16 select-none">
+        <span id="monthlyLabel" class="text-[15px] font-semibold text-[#1d1d1f] cursor-pointer">Monthly</span>
+        <button 
+          id="billingToggle" 
+          class="w-14 h-8 rounded-full bg-[#edf1f4] border border-[#dde5ed] p-1 flex items-center transition-colors focus:outline-none relative" 
+          role="switch" 
+          aria-checked="false"
+        >
+          <div id="billingCircle" class="w-6 h-6 rounded-full bg-white shadow-md transition-transform duration-300 translate-x-0"></div>
         </button>
-        <button class="sound-btn" id="bigFrog" type="button">
-          <span class="sb-icon">🐸</span>
-          <span class="sb-name">Big frog</span>
-          <span class="sb-desc">Deep bullfrog croak</span>
-        </button>
-        <button class="sound-btn" id="chorusBtn" type="button">
-          <span class="sb-icon">🎤</span>
-          <span class="sb-name">Full chorus</span>
-          <span class="sb-desc">The whole pond sings at once</span>
-        </button>
+        <div class="flex items-center gap-2 cursor-pointer" id="yearlyWrapper">
+          <span id="yearlyLabel" class="text-[15px] font-medium text-[#86868b]">Yearly</span>
+          <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-[#10b981]/20 text-[#10b981] border border-[#10b981]/30">
+            Save up to 50%
+          </span>
+        </div>
       </div>
-    </section>
 
-    <!-- Ribbit button -->
-    <button class="btn-ribbit" id="ribbitBtn">🐸 Press for a ribbit</button>
-    <div class="ribbit-out" id="ribbitOut" aria-live="polite"></div>
+      <!-- Pricing Cards with 3D Tilt -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-[1080px] mx-auto mb-12 items-stretch">
+        
+        <!-- Starter Tadpole Card -->
+        <div class="apple-tilt-card rounded-[28px] bg-white border border-[#dde5ed] p-8 sm:p-10 flex flex-col justify-between shadow-sm hover:border-[#10b981]/50 transition-all reveal-on-scroll stagger-1">
+          <div class="specular-glare"></div>
+          <div>
+            <div class="mb-6">
+              <h3 class="font-display text-[26px] font-semibold text-[#1d1d1f] mb-1">Tadpole Plan</h3>
+              <p class="text-[14px] text-[#4d585f]">Ideal for backyard garden ponds & hobbyists</p>
+            </div>
 
-    <footer class="bot">
-      Made with <span class="heart">❤</span> and a lot of bug-hunting · Ribbit © 2026 · Frog World Industries 🪷
-    </footer>
-  </div>
+            <div class="flex items-baseline gap-2 mb-8">
+              <span id="starterPrice" class="font-display text-[54px] font-bold text-[#1d1d1f] leading-none tracking-tight">$5</span>
+              <span id="starterPeriod" class="text-[16px] text-[#4d585f]">/month</span>
+            </div>
+
+            <a href="#playground" class="apple-magnetic-btn w-full inline-flex items-center justify-center py-3.5 px-6 rounded-full text-[15px] font-medium text-[#1d1d1f] bg-[#f8fafc] border border-[#dde5ed] hover:border-[#1d1d1f] hover:-translate-y-0.5 transition-all mb-8 shadow-sm">
+              Get Started
+            </a>
+
+            <div class="space-y-3.5 pt-6 border-t border-gray-100 text-[14px] text-[#1d1d1f]">
+              <div class="flex items-center gap-3"><span class="text-[#10b981] font-bold">✓</span> 10,000 intercepted flies / month</div>
+              <div class="flex items-center gap-3"><span class="text-[#10b981] font-bold">✓</span> <strong class="font-medium">Unlimited pond visits</strong></div>
+              <div class="flex items-center gap-3"><span class="text-[#10b981] font-bold">✓</span> Lily pad domain protection</div>
+              <div class="flex items-center gap-3"><span class="text-[#10b981] font-bold">✓</span> Web Audio Choir synthesizer access</div>
+              <div class="flex items-center gap-3"><span class="text-[#10b981] font-bold">✓</span> Community pond chat & updates</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bullfrog VIP Card: Apple Space Black Material with Specular Sheen -->
+        <div class="apple-tilt-card apple-glass-dark rounded-[28px] text-white p-8 sm:p-10 flex flex-col justify-between shadow-2xl relative overflow-hidden border border-white/10 reveal-on-scroll stagger-2">
+          <div class="specular-glare specular-glare-dark"></div>
+          <div class="absolute top-6 right-6">
+            <span class="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-semibold bg-[#10b981] text-white shadow-sm">
+              ★ Popular
+            </span>
+          </div>
+
+          <div>
+            <div class="mb-6">
+              <h3 class="font-display text-[26px] font-semibold text-white mb-1">Bullfrog VIP</h3>
+              <p class="text-[14px] text-[#86868b]">For wildlife reserves & commercial wetlands</p>
+            </div>
+
+            <div class="flex items-baseline gap-2 mb-8">
+              <span id="agencyPrice" class="font-display text-[54px] font-bold text-white leading-none tracking-tight">$29</span>
+              <span id="agencyPeriod" class="text-[16px] text-[#86868b]">/month</span>
+            </div>
+
+            <a href="#playground" class="apple-magnetic-btn w-full inline-flex items-center justify-center py-3.5 px-6 rounded-full text-[15px] font-semibold text-[#1d1d1f] bg-white hover:bg-gray-100 hover:-translate-y-0.5 transition-all mb-8 shadow-sm">
+              Get Started
+            </a>
+
+            <div class="space-y-3.5 pt-6 border-t border-white/10 text-[14px] text-white">
+              <div class="flex items-center gap-3"><span class="text-[#10b981] font-bold">✓</span> <strong class="font-medium">Unlimited bug interception</strong></div>
+              <div class="flex items-center gap-3"><span class="text-[#10b981] font-bold">✓</span> Multiple private pond environments</div>
+              <div class="flex items-center gap-3"><span class="text-[#10b981] font-bold">✓</span> Custom watermark logo on all lily pads</div>
+              <div class="flex items-center gap-3"><span class="text-[#10b981] font-bold">✓</span> Full 7-frog choir harmonic oscillator</div>
+              <div class="flex items-center gap-3"><span class="text-[#10b981] font-bold">✓</span> Dedicated amphibian biologist support</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Lifetime Plan Callout Banner with Apple Glass Styling -->
+      <div class="apple-tilt-card max-w-[1080px] mx-auto rounded-[28px] bg-gradient-to-r from-[#ecfdf5] via-white to-[#ecfdf5] border border-[#a7f3d0] p-8 sm:p-10 flex flex-col sm:flex-row items-center justify-between gap-6 shadow-sm reveal-on-scroll">
+        <div class="specular-glare"></div>
+        <div>
+          <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-[#10b981]/20 text-[#065f46] mb-3">
+            <span>🪷</span> Lifetime Wetland Pass
+          </div>
+          <h3 class="font-display text-[24px] sm:text-[28px] font-semibold text-[#1d1d1f] mb-1">
+            Lifetime Plan — Pay Once. Hop Forever.
+          </h3>
+          <p class="text-[14px] sm:text-[15px] text-[#4d585f]">
+            Lock in unlimited amphibian playground access for life. Zero recurring subscriptions, ever.
+          </p>
+        </div>
+        <a href="#pricing" class="apple-magnetic-btn flex-shrink-0 inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-full text-[15px] font-semibold text-white bg-[#1d1d1f] hover:bg-black hover:-translate-y-0.5 transition-all shadow-md">
+          <span>Claim Lifetime Pass</span>
+          <span>→</span>
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       SECTION 8: FAQ ACCORDION (SMOOTH 60FPS GRID SLIDE ANIMATIONS)
+       ======================================================================== -->
+  <section class="py-24 sm:py-32 bg-white border-t border-[#dde5ed]/70" id="faqs">
+    <div class="max-w-[1200px] mx-auto px-4 sm:px-6">
+      
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+        
+        <!-- Left Column -->
+        <div class="lg:col-span-5 reveal-on-scroll">
+          <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#edf1f4] text-[13px] font-medium text-[#1d1d1f] mb-4">
+            <span>FAQs</span>
+          </div>
+          <h2 class="font-display text-[36px] sm:text-[44px] font-semibold text-[#1d1d1f] tracking-[-0.8px] leading-[1.15] mb-4">
+            Frequently asked questions
+          </h2>
+          <p class="text-[16px] text-[#4d585f] leading-relaxed mb-8">
+            Curious about amphibian biology, synthesized acoustics, or our playground physics? Here are the answers.
+          </p>
+
+          <div class="apple-glass rounded-[28px] p-8 shadow-sm">
+            <span class="text-3xl block mb-3">💬</span>
+            <h4 class="font-display text-[20px] font-semibold text-[#1d1d1f] mb-2">Still have questions?</h4>
+            <p class="text-[14px] text-[#4d585f] leading-relaxed mb-6">
+              Reach out to our pond curators and amphibian naturalists anytime.
+            </p>
+            <a href="mailto:ribbit@frogworld.io" class="apple-magnetic-btn inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full text-[14px] font-medium text-white bg-[#1d1d1f] hover:bg-black hover:-translate-y-0.5 transition-all shadow-sm">
+              <span>Talk to our team</span>
+              <span>→</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Right Column: Accordion Items with Grid Animation -->
+        <div class="lg:col-span-7 reveal-on-scroll stagger-2">
+          <div class="rounded-[28px] bg-[#f8fafc] border border-[#dde5ed] divide-y divide-[#dde5ed] overflow-hidden shadow-sm">
+            
+            <!-- Item 1 (Open by default) -->
+            <div class="faq-item">
+              <button class="faq-btn w-full text-left py-6 px-6 sm:px-8 flex items-center justify-between gap-4 focus:outline-none group" aria-expanded="true">
+                <span class="font-display text-[17px] font-semibold text-[#1d1d1f] group-hover:text-[#10b981] transition-colors">
+                  Do frogs really swallow food using their eyeballs?
+                </span>
+                <span class="faq-icon w-8 h-8 rounded-full bg-[#10b981] text-white flex items-center justify-center text-lg flex-shrink-0 transition-transform duration-300 rotate-45">+</span>
+              </button>
+              <div class="faq-grid-content is-open">
+                <div class="faq-grid-inner px-6 sm:px-8 pb-6 pt-1 text-[15px] text-[#4d585f] leading-relaxed">
+                  Yes, absolutely! When a frog captures an insect, it closes its eyelids and pushes its bulging eyeballs downward into the roof of its mouth. This pressure forces the food directly down its esophagus.
+                </div>
+              </div>
+            </div>
+
+            <!-- Item 2 -->
+            <div class="faq-item">
+              <button class="faq-btn w-full text-left py-6 px-6 sm:px-8 flex items-center justify-between gap-4 focus:outline-none group" aria-expanded="false">
+                <span class="font-display text-[17px] font-semibold text-[#1d1d1f] group-hover:text-[#10b981] transition-colors">
+                  How does the Alaskan wood frog survive being frozen solid?
+                </span>
+                <span class="faq-icon w-8 h-8 rounded-full bg-[#edf1f4] text-[#1d1d1f] flex items-center justify-center text-lg flex-shrink-0 transition-transform duration-300">+</span>
+              </button>
+              <div class="faq-grid-content">
+                <div class="faq-grid-inner px-6 sm:px-8 pb-6 pt-1 text-[15px] text-[#4d585f] leading-relaxed">
+                  The wood frog produces high concentrations of glucose and urea in its blood, acting as a biological antifreeze. Up to 65% of its total body water can freeze solid for months without damaging vital organs, thawing out completely in the spring!
+                </div>
+              </div>
+            </div>
+
+            <!-- Item 3 -->
+            <div class="faq-item">
+              <button class="faq-btn w-full text-left py-6 px-6 sm:px-8 flex items-center justify-between gap-4 focus:outline-none group" aria-expanded="false">
+                <span class="font-display text-[17px] font-semibold text-[#1d1d1f] group-hover:text-[#10b981] transition-colors">
+                  How does the Web Audio Frog Choir synthesize sound?
+                </span>
+                <span class="faq-icon w-8 h-8 rounded-full bg-[#edf1f4] text-[#1d1d1f] flex items-center justify-center text-lg flex-shrink-0 transition-transform duration-300">+</span>
+              </button>
+              <div class="faq-grid-content">
+                <div class="faq-grid-inner px-6 sm:px-8 pb-6 pt-1 text-[15px] text-[#4d585f] leading-relaxed">
+                  It uses standard Web Audio API OscillatorNodes combining sawtooth and triangle waveforms with rapid exponential frequency glides and customized envelope gain ramps to simulate natural frog vocal cords.
+                </div>
+              </div>
+            </div>
+
+            <!-- Item 4 -->
+            <div class="faq-item">
+              <button class="faq-btn w-full text-left py-6 px-6 sm:px-8 flex items-center justify-between gap-4 focus:outline-none group" aria-expanded="false">
+                <span class="font-display text-[17px] font-semibold text-[#1d1d1f] group-hover:text-[#10b981] transition-colors">
+                  How many species of frogs exist today?
+                </span>
+                <span class="faq-icon w-8 h-8 rounded-full bg-[#edf1f4] text-[#1d1d1f] flex items-center justify-center text-lg flex-shrink-0 transition-transform duration-300">+</span>
+              </button>
+              <div class="faq-grid-content">
+                <div class="faq-grid-inner px-6 sm:px-8 pb-6 pt-1 text-[15px] text-[#4d585f] leading-relaxed">
+                  There are approximately 7,000 recognized species of anurans (frogs and toads), inhabiting tropical rainforests, alpine tundra, arid deserts, and temperate ponds on every continent except Antarctica.
+                </div>
+              </div>
+            </div>
+
+            <!-- Item 5 -->
+            <div class="faq-item">
+              <button class="faq-btn w-full text-left py-6 px-6 sm:px-8 flex items-center justify-between gap-4 focus:outline-none group" aria-expanded="false">
+                <span class="font-display text-[17px] font-semibold text-[#1d1d1f] group-hover:text-[#10b981] transition-colors">
+                  Do frogs drink water through their mouths?
+                </span>
+                <span class="faq-icon w-8 h-8 rounded-full bg-[#edf1f4] text-[#1d1d1f] flex items-center justify-center text-lg flex-shrink-0 transition-transform duration-300">+</span>
+              </button>
+              <div class="faq-grid-content">
+                <div class="faq-grid-inner px-6 sm:px-8 pb-6 pt-1 text-[15px] text-[#4d585f] leading-relaxed">
+                  No! Frogs rarely drink water through their mouths. Instead, they absorb water and moisture directly through a specialized vascular region on their bellies known as the "seat patch."
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       SECTION 9: FINAL APPLE KEYNOTE CALL TO ACTION (SPACE BLACK)
+       ======================================================================== -->
+  <section class="relative py-28 sm:py-40 bg-[#0f1115] text-white overflow-hidden">
+    <!-- Ambient glowing green mesh -->
+    <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-[#10b981]/15 rounded-full blur-[120px] pointer-events-none"></div>
+
+    <div class="relative z-10 max-w-[900px] mx-auto px-4 sm:px-6 text-center reveal-on-scroll">
+      <span class="text-4xl block mb-4 animate-bounce">🪷</span>
+      <h2 class="font-display text-[44px] sm:text-[68px] font-semibold tracking-[-1.5px] leading-[1.05] mb-6">
+        Ready to Make the Leap?
+      </h2>
+      <p class="text-[16px] sm:text-[18px] text-[#86868b] max-w-[640px] mx-auto leading-relaxed mb-10">
+        Join over 20,000 naturalists, biology enthusiasts, and pond keepers exploring the ultimate amphibian experience.
+      </p>
+
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <a href="#playground" class="apple-magnetic-btn inline-flex items-center justify-center gap-3 px-8 py-3.5 rounded-full text-[15px] font-semibold text-[#1d1d1f] bg-white hover:bg-gray-100 hover:-translate-y-0.5 transition-all shadow-xl">
+          <span>Enter the Pond</span>
+          <span>→</span>
+        </a>
+        <a href="#pricing" class="apple-magnetic-btn inline-flex items-center justify-center px-8 py-3.5 rounded-full text-[15px] font-medium text-white bg-white/10 hover:bg-white/20 border border-white/20 hover:-translate-y-0.5 transition-all">
+          View Adoption Plans
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       SECTION 10: MINIMAL APPLE-GRADE FOOTER
+       ======================================================================== -->
+  <footer class="bg-[#0b0c0e] text-white border-t border-white/10 pt-20 pb-12">
+    <div class="max-w-[1200px] mx-auto px-4 sm:px-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 mb-16">
+        <div class="lg:col-span-2">
+          <div class="flex items-center gap-2 mb-4">
+            <span class="text-2xl">🐸</span>
+            <span class="font-display text-xl font-bold">Ribbit.io</span>
+          </div>
+          <p class="text-sm text-[#86868b] leading-relaxed max-w-sm mb-6">
+            A playful, high-performance web pond dedicated to celebrating Earth's friendliest and most athletic amphibians.
+          </p>
+          <div class="text-xs text-gray-500 font-mono">
+            Engineered with Apple Design Principles, Web Audio API & 60 FPS physics.
+          </div>
+        </div>
+
+        <div>
+          <h4 class="font-display text-sm font-semibold mb-4 text-white">Ecosystem</h4>
+          <ul class="space-y-3 text-sm text-[#86868b]">
+            <li><a href="#playground" class="hover:text-white transition-colors">Playground</a></li>
+            <li><a href="#species" class="hover:text-white transition-colors">Species Index</a></li>
+            <li><a href="#choir" class="hover:text-white transition-colors">Frog Choir</a></li>
+            <li><a href="#pricing" class="hover:text-white transition-colors">Adoption Plans</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="font-display text-sm font-semibold mb-4 text-white">Amphibians</h4>
+          <ul class="space-y-3 text-sm text-[#86868b]">
+            <li><a href="#features" class="hover:text-white transition-colors">Anatomy & Leaps</a></li>
+            <li><a href="#features" class="hover:text-white transition-colors">Metamorphosis</a></li>
+            <li><a href="#quiz" class="hover:text-white transition-colors">Biology Quiz</a></li>
+            <li><a href="#faqs" class="hover:text-white transition-colors">FAQ Knowledgebase</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="font-display text-sm font-semibold mb-4 text-white">Sanctuary</h4>
+          <ul class="space-y-3 text-sm text-[#86868b]">
+            <li><a href="#" class="hover:text-white transition-colors">About Us</a></li>
+            <li><a href="mailto:ribbit@frogworld.io" class="hover:text-white transition-colors">Contact Curators</a></li>
+            <li><a href="#" class="hover:text-white transition-colors">Wetland Privacy</a></li>
+            <li><a href="#" class="hover:text-white transition-colors">Terms of Ponds</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#86868b]">
+        <div>
+          Made with 💚 and endless bug-hunting · Ribbit © 2026 Frog World Industries 🪷
+        </div>
+        <div class="flex items-center gap-6">
+          <a href="#" class="hover:text-white transition-colors">Twitter / X</a>
+          <a href="#" class="hover:text-white transition-colors">YouTube</a>
+          <a href="#" class="hover:text-white transition-colors">Discord Community</a>
+        </div>
+      </div>
+    </div>
+  </footer>
 
   <script type="module" src="./main.js"></script>
 </body>
